@@ -26,6 +26,6 @@ class SorceryCore < ActiveRecord::Migration[5.2]
       t.timestamps                :null => false
     end
 
-    add_index :staffs, :phone, unique: true
+    add_index :staffs, :email, unique: true
   end
 end

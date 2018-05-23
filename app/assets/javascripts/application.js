@@ -12,4 +12,8 @@
 //
 //= require rails-ujs
 //= require activestorage
+//= require jquery/dist/jquery.js
+//= require popper.js/dist/popper.js
+//= require bootstrap/dist/js/bootstrap.js
+//= require perfect-scrollbar/dist/perfect-scrollbar.js
 //= require_tree .

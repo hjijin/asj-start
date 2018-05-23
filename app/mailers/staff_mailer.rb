@@ -1,0 +1,2 @@
+class StaffMailer < ApplicationMailer
+end
