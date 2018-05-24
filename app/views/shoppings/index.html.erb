@@ -1,0 +1,40 @@
+<% provide(:title, "Shopping") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">买菜记录</h6>
+    <p style="margin-bottom: 0;">记录每天买的菜和花费。</p>
+    <a href="<%= new_shopping_path %>" class="btn btn-primary pd-lg-x-20 mg-l-auto">登记</a>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>ID</th>
+            <th>花费（￥）</th>
+            <th>备注</th>
+            <th>购买者</th>
+            <th>日期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @shoppings.each do |s| %>
+            <tr>
+              <td><%= s.id %></td>
+              <td><%= s.total %></td>
+              <td><%= truncate(s.remark, length: 40, omission: "...#{s.remark[-5, 5]}") %></td>
+              <td><%= s.buyer %></td>
+              <td><%= s.shopping_date %></td>
+              <td>
+                <button class="btn btn-danger btn-sm">删除</button>
+                <%#= link_to 'Edit', edit_shopping_path(shopping) %>
+                <%#= link_to 'Destroy', shopping, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

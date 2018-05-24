@@ -12,8 +12,16 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require jquery/dist/jquery.js
-//= require popper.js/dist/popper.js
-//= require bootstrap/dist/js/bootstrap.js
-//= require perfect-scrollbar/dist/perfect-scrollbar.js
+//= require theme/jquery/jquery
+//= require theme/popper.js/popper
+//= require theme/bootstrap/bootstrap
+//= require theme/perfect-scrollbar/js/perfect-scrollbar.jquery
+//= require theme/jquery-toggles/toggles.min
+//= require theme/d3/d3
+//= require theme/rickshaw/rickshaw
+//= require theme/Flot/jquery.flot
+//= require theme/Flot/jquery.flot.pie
+//= require theme/Flot/jquery.flot.resize
+//= require theme/flot-spline/jquery.flot.spline
+//= require theme/ResizeSensor
 //= require_tree .

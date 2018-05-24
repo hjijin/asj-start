@@ -1,0 +1,41 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @shopping.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
+    <p class="mg-b-20 mg-sm-b-30">这里是登记买菜记录的。</p>
+    <%= form_with(model: shopping, local: true, class: "form-layout") do |f| %>
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">购买者: <span class="tx-danger">*</span></label>
+            <%= f.text_field :buyer, class: "form-control", placeholder: "输入购买者名称" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">花费金额: <span class="tx-danger">*</span></label>
+            <%= f.number_field :total, class: "form-control", placeholder: "输入花费金额" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">购买日期: <span class="tx-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
+              <%= f.date_field :shopping_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="form-group mg-b-10-force">
+            <label class="form-control-label">备注: <span class="tx-danger">*</span></label>
+            <%= f.text_area :remark, class: "form-control", rows: 5, placeholder: "输入所购买的商品" %>
+          </div>
+        </div>
+      </div>
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">确定</button>
+        <%= link_to '取消', shoppings_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

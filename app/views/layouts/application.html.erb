@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ASJ-Start</title>
+    <title><%= title(yield(:title)) %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= yield :stylesheets %>
   </head>
 
   <body>
-    <%= yield %>
+    <% unless controller.controller_name == "sessions" && controller.action_name == "new" %>
+      <%= render 'shared/header' %>
+      <%= render 'shared/sidebar' %>
+      <div class="am-mainpanel">
+        <div class="am-pagetitle">
+          <h5 class="am-title"><%= am_title(yield(:title)) %></h5>
+          <!-- <form id="searchBar" class="search-bar" action="index.html">
+            <div class="form-control-wrapper">
+              <input type="search" class="form-control bd-0" placeholder="Search...">
+            </div> -->
+            <!-- form-control-wrapper -->
+            <button id="searchBtn" class="btn btn-orange"><i class="fa fa-plus"></i>点击订餐</button>
+          <!-- </form> -->
+          <!-- search-bar -->
+        </div>
+        <%= yield %>
+        <%= render 'shared/footer' %>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
+    <%= javascript_include_tag 'application' %>
+    <%= yield :javascripts %>
   </body>
 </html>

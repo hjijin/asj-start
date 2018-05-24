@@ -10,10 +10,11 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require font-awesome/css/font-awesome.css
- *= require ionicons/dist/css/ionicons.css
- *= require perfect-scrollbar/css/perfect-scrollbar.css
- *= require bootstrap/dist/css/bootstrap
+ *= require theme/font-awesome/css/font-awesome
+ *= require theme/Ionicons/css/ionicons
+ *= require theme/perfect-scrollbar/css/perfect-scrollbar
+ *= require theme/jquery-toggles/toggles-full
+ *= require theme/rickshaw/rickshaw
  *= require_tree .
  *= require_self
  */

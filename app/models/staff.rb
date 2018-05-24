@@ -1,6 +1,8 @@
 class Staff < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_many :shoppings
+
   attr_accessor :password, :password_confirmation
 
   PHONE_REGEX = /\A(\+86|86)?1\d{10}\z/
@@ -19,7 +21,7 @@ class Staff < ApplicationRecord
 
   # validates :password, length: { minimum: 3 }
   # validates :password, confirmation: true
-  # validates :email, uniqueness: true
+  validates :email, uniqueness: true
 
   private
   def need_validate_password

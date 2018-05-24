@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root "staffs#index"
+  resources :shoppings
+  root "dashboard#index"
 
   resources :staffs
 

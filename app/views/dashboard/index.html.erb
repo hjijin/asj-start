@@ -1,0 +1,206 @@
+<% provide(:title, "Dashboard") %>
+
+<div class="am-pagebody">
+  <div class="row row-sm">
+    <div class="col-lg-4">
+      <div class="card">
+        <div id="rs1" class="wd-100p ht-200"></div>
+        <div class="overlay-body pd-x-20 pd-t-20">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="tx-12 tx-uppercase tx-inverse tx-bold mg-b-5">订餐报名人数</h6>
+              <p class="tx-12">数量对比</p>
+            </div>
+            <a href="" class="tx-gray-600 hover-info"><i class="icon ion-more tx-16 lh-0"></i></a>
+          </div>
+          <h2 class="mg-b-5 tx-inverse tx-lato">今天：12</h2>
+          <p class="tx-12 mg-b-0">每天十一点前报名。</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mg-t-15 mg-sm-t-20 mg-lg-t-0">
+      <div class="card">
+        <div id="rs2" class="wd-100p ht-200"></div>
+        <div class="overlay-body pd-x-20 pd-t-20">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="tx-12 tx-uppercase tx-inverse tx-bold mg-b-5">买菜价格</h6>
+              <p class="tx-12">支出对比</p>
+            </div>
+            <a href="" class="tx-gray-600 hover-info"><i class="icon ion-more tx-16 lh-0"></i></a>
+          </div>
+          <h2 class="mg-b-5 tx-inverse tx-lato">今天：￥98</h2>
+          <p class="tx-12 mg-b-0">每天十点买菜。</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mg-t-15 mg-sm-t-20 mg-lg-t-0">
+      <div class="card">
+        <div id="rs3" class="wd-100p ht-200"></div>
+        <div class="overlay-body pd-x-20 pd-t-20">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="tx-12 tx-uppercase tx-inverse tx-bold mg-b-5">人均支持</h6>
+              <p class="tx-12">每天分摊</p>
+            </div>
+            <a href="" class="tx-gray-600 hover-info"><i class="icon ion-more tx-16 lh-0"></i></a>
+          </div>
+          <h2 class="mg-b-5 tx-inverse tx-lato">今天：￥13.6</h2>
+          <p class="tx-12 mg-b-0">报名吃饭人员每天分摊菜钱。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row row-sm mg-t-15 mg-sm-t-20">
+    <div class="col-md-6">
+      <div class="card pd-20 pd-sm-40">
+        <h6 class="card-body-title">TODO: 准备做同比</h6>
+        <p class="mg-b-20 mg-sm-b-30">A bar chart or bar graph is a chart with rectangular bars with lengths proportional to the values that they represent.</p>
+        <div id="f2" class="ht-200 ht-sm-300"></div>
+      </div>
+    </div>
+    <div class="col-md-6 mg-t-15 mg-sm-t-20 mg-md-t-0">
+      <div class="card pd-20 pd-sm-40">
+        <h6 class="card-body-title">TODO: 做环比</h6>
+        <p class="mg-b-20 mg-sm-b-30">The stacked charts are used when data sets have to be broken down into their constituents.</p>
+        <div id="f1" class="ht-200 ht-sm-300"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row row-sm mg-t-15 mg-sm-t-20">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header bg-transparent pd-20">
+          <h6 class="card-title tx-uppercase tx-12 mg-b-0">今天报名吃饭的人如下: (13)</h6>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-white mg-b-0 tx-12">
+            <tbody>
+              <tr>
+                <td class="pd-l-20 tx-center">
+                  <img src="<%= image_path('img1.jpg') %>" class="wd-36 rounded-circle" alt="Image">
+                </td>
+                <td>
+                  <a href="" class="tx-inverse tx-14 tx-medium d-block">Mark K. Peters</a>
+                  <span class="tx-11 d-block">TRANSID: 1234567890</span>
+                </td>
+                <td class="tx-12">
+                  <span class="square-8 bg-success mg-r-5 rounded-circle"></span> Email verified
+                </td>
+                <td>Just Now</td>
+              </tr>
+              <tr>
+                <td class="pd-l-20 tx-center">
+                  <img src="<%= image_path('img2.jpg') %>" class="wd-36 rounded-circle" alt="Image">
+                </td>
+                <td>
+                  <a href="" class="tx-inverse tx-14 tx-medium d-block">Karmen F. Brown</a>
+                  <span class="tx-11 d-block">TRANSID: 1234567890</span>
+                </td>
+                <td class="tx-12">
+                  <span class="square-8 bg-warning mg-r-5 rounded-circle"></span> Pending verification
+                </td>
+                <td>Apr 21, 2017 8:34am</td>
+              </tr>
+              <tr>
+                <td class="pd-l-20 tx-center">
+                  <img src="<%= image_path('img3.jpg') %>" class="wd-36 rounded-circle" alt="Image">
+                </td>
+                <td>
+                  <a href="" class="tx-inverse tx-14 tx-medium d-block">Gorgonio Magalpok</a>
+                  <span class="tx-11 d-block">TRANSID: 1234567890</span>
+                </td>
+                <td class="tx-12">
+                  <span class="square-8 bg-success mg-r-5 rounded-circle"></span> Purchased success
+                </td>
+                <td>Apr 10, 2017 4:40pm</td>
+              </tr>
+              <tr>
+                <td class="pd-l-20 tx-center">
+                  <img src="<%= image_path('img5.jpg') %>" class="wd-36 rounded-circle" alt="Image">
+                </td>
+                <td>
+                  <a href="" class="tx-inverse tx-14 tx-medium d-block">Ariel T. Hall</a>
+                  <span class="tx-11 d-block">TRANSID: 1234567890</span>
+                </td>
+                <td class="tx-12">
+                  <span class="square-8 bg-warning mg-r-5 rounded-circle"></span> Payment on hold
+                </td>
+                <td>Apr 02, 2017 6:45pm</td>
+              </tr>
+              <tr>
+                <td class="pd-l-20 tx-center">
+                  <img src="<%= image_path('img4.jpg') %>" class="wd-36 rounded-circle" alt="Image">
+                </td>
+                <td>
+                  <a href="" class="tx-inverse tx-14 tx-medium d-block">John L. Goulette</a>
+                  <span class="tx-11 d-block">TRANSID: 1234567890</span>
+                </td>
+                <td class="tx-12">
+                  <span class="square-8 bg-pink mg-r-5 rounded-circle"></span> Account deactivated
+                </td>
+                <td>Mar 30, 2017 10:30am</td>
+              </tr>
+              <tr>
+                <td class="pd-l-20 tx-center">
+                  <img src="<%= image_path('img5.jpg') %>" class="wd-36 rounded-circle" alt="Image">
+                </td>
+                <td>
+                  <a href="" class="tx-inverse tx-14 tx-medium d-block">John L. Goulette</a>
+                  <span class="tx-11 d-block">TRANSID: 1234567890</span>
+                </td>
+                <td class="tx-12">
+                  <span class="square-8 bg-pink mg-r-5 rounded-circle"></span> Account deactivated
+                </td>
+                <td>Mar 30, 2017 10:30am</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer tx-12 pd-y-15 bg-transparent bd-t bd-gray-200">
+          <a href=""><i class="fa fa-angle-down mg-r-5"></i>查看更多</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mg-t-15 mg-sm-t-20 mg-lg-t-0">
+      <div class="card pd-20">
+        <h6 class="tx-12 tx-uppercase tx-inverse tx-bold mg-b-15">买菜记录</h6>
+        <div class="d-flex mg-b-10">
+          <div class="bd-r pd-r-10">
+            <label class="tx-12">Today</label>
+            <p class="tx-lato tx-inverse tx-bold">￥120</p>
+          </div>
+          <div class="bd-r pd-x-10">
+            <label class="tx-12">This Week</label>
+            <p class="tx-lato tx-inverse tx-bold">￥712</p>
+          </div>
+          <div class="pd-l-10">
+            <label class="tx-12">This Month</label>
+            <p class="tx-lato tx-inverse tx-bold">￥2,067</p>
+          </div>
+        </div>
+        <div class="progress mg-b-10">
+          <div class="progress-bar wd-50p" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+        </div>
+        <p class="tx-12 mg-b-0">这是这个月度过了的时间，说剩下多少时间也行。</p>
+      </div>
+      <ul class="list-group widget-list-group bg-info mg-t-20">
+        <li class="list-group-item rounded-top-0">
+          <p class="mg-b-0"><i class="fa fa-cube tx-white-7 mg-r-8"></i><strong class="tx-medium">Retina, 15-inch, Mid 2016</strong> <span class="text-muted">Display</span></p>
+        </li>
+        <li class="list-group-item">
+          <p class="mg-b-0"><i class="fa fa-cube tx-white-7 mg-r-8"></i><strong class="tx-medium">AMD Radeon R9 M370X</strong> <span class="text-muted">Graphics</span></p>
+        </li>
+        <li class="list-group-item">
+          <p class="mg-b-0"><i class="fa fa-cube tx-white-7 mg-r-8"></i><strong class="tx-medium">512 GB</strong> <span class="text-muted">Flash Storage</span></p>
+        </li>
+        <li class="list-group-item">
+          <p class="mg-b-0"><i class="fa fa-cube tx-white-7 mg-r-8"></i><strong class="tx-medium">2.8 GHz Intel Core i7</strong> <span class="text-muted">Processor</span></p>
+        </li>
+        <li class="list-group-item rounded-bottom-0">
+          <p class="mg-b-0"><i class="fa fa-cube tx-white-7 mg-r-8"></i><strong class="tx-tx-medium">16 GB 1600 MHz DDR3</strong> <span class="text-muted">Memory</span></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
