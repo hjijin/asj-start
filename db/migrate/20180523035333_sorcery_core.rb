@@ -15,7 +15,7 @@ class SorceryCore < ActiveRecord::Migration[5.2]
       t.integer  :job_number, comment: "工号"
       t.integer  :probation_month, comment: "试用期"
       t.date     :dimission_date, comment: "离职日期"
-      t.date     :job_date, comment: "入职日期日期"
+      t.date     :job_date, comment: "入职日期"
       t.date     :official_date, comment: "转正日期"
       t.float    :remaining_annual_leave
       t.float    :remaining_sick_leave

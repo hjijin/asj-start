@@ -1,25 +1,48 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, "Staffs") %>
 
-<h1>Staffs</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @staffs.each do |staff| %>
-      <tr>
-        <td><%= link_to 'Show', staff %></td>
-        <td><%= link_to 'Edit', edit_staff_path(staff) %></td>
-        <td><%= link_to 'Destroy', staff, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Staff', new_staff_path %>
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">员工通讯录</h6>
+    <p style="margin-bottom: 0;">记录员工基本信息。</p>
+    <a href="<%= new_staff_path %>" class="btn btn-primary pd-lg-x-20 mg-l-auto">新建</a>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>工号</th>
+            <th>用户名</th>
+            <th>性别</th>
+            <th>手机</th>
+            <th>微信</th>
+            <th>部门</th>
+            <th>入职日期</th>
+            <th>转正日期</th>
+            <th>在职状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @staffs.each do |s| %>
+            <tr>
+              <td><%= s.job_number %></td>
+              <td><%= s.username %></td>
+              <td><%= s.sex %></td>
+              <td><%= s.phone %></td>
+              <td><%= s.wechat %></td>
+              <td><%= s.staff_type %></td>
+              <td><%= s.job_date %></td>
+              <td><%= s.official_date %></td>
+              <td><%= raw(s.active? ? '<span class="tx-success">在职</span>' : '<span class="tx-danger">离职</span>') %></td>
+              <td>
+                <%= link_to "展示", staff_path(s), class: "btn btn-secondary btn-sm" %>
+                <%= link_to "编辑", edit_staff_path(s), class: "btn btn-warning btn-sm" %>
+                <%= link_to "删除", s, method: :delete, data: { confirm: '你确定要删除吗？' }, class: "btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
