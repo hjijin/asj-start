@@ -4,7 +4,7 @@ class StaffsController < ApplicationController
   # GET /staffs
   # GET /staffs.json
   def index
-    @staffs = Staff.all
+    @staffs = Staff.all.order("created_at DESC")
   end
 
   # GET /staffs/1
@@ -28,7 +28,7 @@ class StaffsController < ApplicationController
 
     respond_to do |format|
       if @staff.save
-        format.html { redirect_to @staff, notice: 'Staff was successfully created.' }
+        format.html { redirect_to staffs_path, notice: 'Staff was successfully created.' }
         format.json { render :show, status: :created, location: @staff }
       else
         format.html { render :new }
@@ -69,6 +69,6 @@ class StaffsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def staff_params
-      params.fetch(:staff, {})
+      params.require(:staff).permit!
     end
 end

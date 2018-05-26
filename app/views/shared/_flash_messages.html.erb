@@ -1,0 +1,9 @@
+<% if flash.any? %>
+  <% content_for :javascripts do %>
+    <% flash.map do |key, message| %>
+      <script>
+        msg_show('<%= flashes_class(key) %>','<%= message %>','<%= t :warm_prompt %>：');
+      </script>
+    <% end %>
+  <% end %>
+<% end %>

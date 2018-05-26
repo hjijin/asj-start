@@ -10,7 +10,7 @@
       <table class="table table-hover table-bordered mg-b-0">
         <thead class="bg-info">
           <tr>
-            <th>工号</th>
+            <th>ID</th>
             <th>用户名</th>
             <th>性别</th>
             <th>手机</th>
@@ -25,7 +25,7 @@
         <tbody>
           <% @staffs.each do |s| %>
             <tr>
-              <td><%= s.job_number %></td>
+              <td><%= s.id %></td>
               <td><%= s.username %></td>
               <td><%= s.sex %></td>
               <td><%= s.phone %></td>

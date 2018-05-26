@@ -2,6 +2,7 @@ class Staff < ApplicationRecord
   authenticates_with_sorcery!
 
   has_many :shoppings
+  has_many :meals
 
   attr_accessor :password, :password_confirmation
 
@@ -23,10 +24,17 @@ class Staff < ApplicationRecord
   # validates :password, confirmation: true
   validates :email, uniqueness: true
 
+  before_validation :set_default_attrs, on: :create
+
   private
   def need_validate_password
     self.new_record? ||
       (!self.password.nil? || !self.password_confirmation.nil?)
+  end
+
+  def set_default_attrs
+    self.password = "123456"
+    self.password_confirmation = "123456"
   end
 
   # TODO

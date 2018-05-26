@@ -24,4 +24,14 @@
 //= require theme/Flot/jquery.flot.resize
 //= require theme/flot-spline/jquery.flot.spline
 //= require theme/ResizeSensor
+//= require toastr.min
 //= require_tree .
+
+function msg_show(type, msg) {
+  toastr.options = {
+    "closeButton": true,
+    "progressBar": true,
+    "timeOut": "2000"
+  };
+  toastr[type](msg); //type:info,error,success,warning
+}

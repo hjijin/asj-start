@@ -15,6 +15,7 @@
  *= require theme/perfect-scrollbar/css/perfect-scrollbar
  *= require theme/jquery-toggles/toggles-full
  *= require theme/rickshaw/rickshaw
+ *= require toastr.min
  *= require_tree .
  *= require_self
  */

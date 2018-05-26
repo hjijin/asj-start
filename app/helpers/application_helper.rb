@@ -1,4 +1,6 @@
 module ApplicationHelper
+  FLASH_CLASSES = { info: "info", success: "success", warning: "warning", error: "error"}.freeze
+
   # 页面标题
   def title(page_title='')
     base_title = 'ASJ-START'
@@ -8,5 +10,10 @@ module ApplicationHelper
   def am_title(page_title='')
     base_title = 'ASJ-START'
     page_title.empty? ? base_title : page_title
+  end
+
+
+  def flashes_class(key)
+    FLASH_CLASSES.fetch key.to_sym, key
   end
 end

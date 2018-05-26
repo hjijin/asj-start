@@ -25,13 +25,13 @@
         <li class="nav-item">
           <a href="<%= shoppings_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'shoppings' %>">
             <i class="icon ion-clipboard"></i>
-            <span>Shopping</span>
+            <span>Shoppings</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="<%= meals_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'meals' %>">
             <i class="icon ion-beer"></i>
-            <span>OrderMeal</span>
+            <span>Meals</span>
           </a>
         </li>
         <li class="nav-item">

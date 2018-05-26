@@ -24,16 +24,23 @@
               <input type="search" class="form-control bd-0" placeholder="Search...">
             </div> -->
             <!-- form-control-wrapper -->
-            <button id="searchBtn" class="btn btn-orange"><i class="fa fa-plus"></i>点击订餐</button>
+            <% if Time.now.hour <= 10 %>
+              <%= form_tag meals_path(staff_id: current_user.id), method: :post do %>
+                <button type="submit" class="btn btn-orange"><i class="fa fa-plus"></i>点击订餐</button>
+              <% end %>
+            <% end %>
           <!-- </form> -->
           <!-- search-bar -->
         </div>
+        <%= render :partial => 'shared/flash_messages', :flash => flash %>
         <%= yield %>
         <%= render 'shared/footer' %>
       </div>
     <% else %>
+      <%= render :partial => 'shared/flash_messages', :flash => flash %>
       <%= yield %>
     <% end %>
+
     <%= javascript_include_tag 'application' %>
     <%= yield :javascripts %>
   </body>

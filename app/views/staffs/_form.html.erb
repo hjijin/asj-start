@@ -1,17 +1,121 @@
-<%= form_with(model: staff, local: true) do |form| %>
-  <% if staff.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(staff.errors.count, "error") %> prohibited this staff from being saved:</h2>
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @staff.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
+    <p class="mg-b-20 mg-sm-b-30">每一位员的信息请尽可能完整的填写。</p>
+    <%= form_with(model: staff, local: true, class: "form-layout") do |f| %>
+      <% if @staff.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@staff.errors.count, "error") %> prohibited this staff from being saved:</h2>
 
-      <ul>
-      <% staff.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @staff.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">工号: <span class="tx-danger">*</span></label>
+            <%= f.text_field :job_number, class: "form-control", placeholder: "输入员工工号" %>
+          </div>
+        </div>
 
-  <div class="actions">
-    <%= form.submit %>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">姓名: <span class="tx-danger">*</span></label>
+            <%= f.text_field :username, class: "form-control", placeholder: "输入员工姓名" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">手机: <span class="tx-danger">*</span></label>
+            <%= f.text_field :phone, class: "form-control", placeholder: "输入手机号" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+            <%= f.text_field :email, class: "form-control", placeholder: "输入邮箱" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">昵称: <span class="tx-danger">*</span></label>
+            <%= f.text_field :nickname, class: "form-control", placeholder: "输入昵称" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">微信: <span class="tx-danger">*</span></label>
+            <%= f.text_field :wechat, class: "form-control", placeholder: "输入微信" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">QQ: <span class="tx-danger">*</span></label>
+            <%= f.text_field :qq, class: "form-control", placeholder: "输入QQ" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">性别: </label>
+            <%= f.text_field :sex, class: "form-control", placeholder: "输入性别" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">部门: </label>
+            <%= f.text_field :staff_type, class: "form-control", placeholder: "输入部门" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">试用期: </label>
+            <%= f.number_field :probation_month, class: "form-control", placeholder: "输入试用期" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">入职日期: <span class="tx-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
+              <%= f.date_field :job_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">转正日期: <span class="tx-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
+              <%= f.date_field :official_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">离职日期: <span class="tx-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
+              <%= f.date_field :dimission_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">确定</button>
+        <%= link_to '取消', staffs_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
