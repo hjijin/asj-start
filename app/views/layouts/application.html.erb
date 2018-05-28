@@ -13,34 +13,28 @@
   </head>
 
   <body>
-    <% unless controller.controller_name == "sessions" && controller.action_name == "new" %>
-      <%= render 'shared/header' %>
-      <%= render 'shared/sidebar' %>
-      <div class="am-mainpanel">
-        <div class="am-pagetitle">
-          <h5 class="am-title"><%= am_title(yield(:title)) %></h5>
-          <!-- <form id="searchBar" class="search-bar" action="index.html">
-            <div class="form-control-wrapper">
-              <input type="search" class="form-control bd-0" placeholder="Search...">
-            </div> -->
-            <!-- form-control-wrapper -->
-            <% if Time.now.hour <= 10 %>
-              <%= form_tag meals_path(staff_id: current_user.id), method: :post do %>
-                <button type="submit" class="btn btn-orange"><i class="fa fa-plus"></i>点击订餐</button>
-              <% end %>
+    <%= render 'shared/header' %>
+    <%= render 'shared/sidebar' %>
+    <div class="am-mainpanel">
+      <div class="am-pagetitle">
+        <h5 class="am-title"><%= am_title(yield(:title)) %></h5>
+        <!-- <form id="searchBar" class="search-bar" action="index.html">
+          <div class="form-control-wrapper">
+            <input type="search" class="form-control bd-0" placeholder="Search...">
+          </div> -->
+          <!-- form-control-wrapper -->
+          <% if Time.now.hour < 10 %>
+            <%= form_tag meals_path(staff_id: current_user.id), method: :post do %>
+              <button type="submit" class="btn btn-orange"><i class="fa fa-plus"></i>点击订餐</button>
             <% end %>
-          <!-- </form> -->
-          <!-- search-bar -->
-        </div>
-        <%= render :partial => 'shared/flash_messages', :flash => flash %>
-        <%= yield %>
-        <%= render 'shared/footer' %>
+          <% end %>
+        <!-- </form> -->
+        <!-- search-bar -->
       </div>
-    <% else %>
       <%= render :partial => 'shared/flash_messages', :flash => flash %>
       <%= yield %>
-    <% end %>
-
+      <%= render 'shared/footer' %>
+    </div>
     <%= javascript_include_tag 'application' %>
     <%= yield :javascripts %>
   </body>

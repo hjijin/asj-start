@@ -5,7 +5,7 @@
     <p class="mg-b-20 mg-sm-b-30">默认只显示当天订餐情况。</p>
     <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
       <div class="d-md-flex pd-y-20 pd-md-y-0">
-        <% if Time.now.hour > 100 %>
+        <% unless Time.now.hour < 10 %>
           <span>订餐时间已经结束!下次早点。</span>
         <% else %>
           <%= form_tag meals_path(staff_id: current_user.id), method: :post do %>
