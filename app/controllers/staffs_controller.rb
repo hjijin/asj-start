@@ -28,7 +28,7 @@ class StaffsController < ApplicationController
   # POST /staffs
   # POST /staffs.json
   def create
-    @staff = Staff.new(staff_params)
+    @staff = Staff.create_with_password(staff_params)
 
     respond_to do |format|
       if @staff.save

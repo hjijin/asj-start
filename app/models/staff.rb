@@ -20,21 +20,17 @@ class Staff < ApplicationRecord
   validates_length_of :password, message: "密码最短为6位", minimum: 6,
     if: :need_validate_password
 
-  # validates :password, length: { minimum: 3 }
-  # validates :password, confirmation: true
   validates :email, uniqueness: true
 
-  before_validation :set_default_attrs, on: :create
+  def self.create_with_password(attr={})
+    generated_password = attr[:phone]
+    self.create(attr.merge(password: generated_password, password_confirmation: generated_password))
+  end
 
   private
   def need_validate_password
     self.new_record? ||
       (!self.password.nil? || !self.password_confirmation.nil?)
-  end
-
-  def set_default_attrs
-    self.password = "123456"
-    self.password_confirmation = "123456"
   end
 
   # TODO
