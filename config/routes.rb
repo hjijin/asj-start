@@ -8,4 +8,10 @@ Rails.application.routes.draw do
   resources :shoppings
   resources :meals
   resources :staffs
+  scope 'profile' do
+    controller :profile do
+      get :password
+      put :update_password
+    end
+  end
 end

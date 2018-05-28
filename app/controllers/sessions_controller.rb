@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :require_login, except: [:destroy]
+  layout 'layouts/sessions_layout'
 
   def new
   end
@@ -9,7 +10,7 @@ class SessionsController < ApplicationController
       flash[:success] = 'Welcome back!'
       redirect_back_or_to root_path
     else
-      flash.now[:warning] = 'E-mail and/or password is incorrect.'
+      flash.now[:warning] = 'E-mail or password is incorrect.'
       render 'new'
     end
   end

@@ -19,6 +19,10 @@ class StaffsController < ApplicationController
 
   # GET /staffs/1/edit
   def edit
+    if current_user.id != params[:id].to_i
+      flash[:error] = "you can only edit yourself."
+      redirect_to staffs_path
+    end
   end
 
   # POST /staffs
@@ -54,7 +58,7 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   # DELETE /staffs/1.json
   def destroy
-    @staff.destroy
+    @staff.update(active: false)
     respond_to do |format|
       format.html { redirect_to staffs_url, notice: 'Staff was successfully destroyed.' }
       format.json { head :no_content }
