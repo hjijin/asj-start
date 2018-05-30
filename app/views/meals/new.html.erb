@@ -1,0 +1,31 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title">管理员帮忙订餐</h6>
+    <p class="mg-b-20 mg-sm-b-30">方便过了订餐时间的同学补订。</p>
+    <%= form_with(model: @meal, local: true) do |f| %>
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <select name="staff_id"  class="form-control select2" data-placeholder="选择员工" multiple>
+              <% @staffs.each do |staff| %>
+                <option value="<%= staff.id %>"><%= staff.username %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">确定</button>
+        <%= link_to '取消', meals_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $(".select2").select2({
+    });
+  </script>
+<% end %>

@@ -1,7 +1,13 @@
 <% provide(:title, "Staffs") %>
+
 <div class="am-pagebody">
   <div class="card pd-20 pd-sm-40">
-    <h6 class="card-body-title">今天订餐报名情况: <span class="tx-danger">(<%= @meals.count %>)</span></h6>
+    <h6 class="card-body-title">今天订餐报名情况:
+      <span class="tx-danger">(<%= @meals.count %>)</span>
+      <% if current_user.has_role? :admin %>
+        <a href="<%= new_meal_path %>" class="tx-gray-600 mg-l-10"><i class="icon fa fa-plus lh-0"></i></a>
+      <% end %>
+    </h6>
     <p class="mg-b-20 mg-sm-b-30">默认只显示当天订餐情况。</p>
     <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
       <div class="d-md-flex pd-y-20 pd-md-y-0">
@@ -31,7 +37,7 @@
               <td><%= m.staff.username %></td>
               <td><%= m.created_at %></td>
               <td>
-                <% if current_user.id == m.staff_id %>
+                <% if current_user.id == m.staff_id || (current_user.has_role? :admin) %>
                   <%= link_to '删除', m, method: :delete, data: { confirm: "确定要取消吗？" }, class: "btn btn-danger btn-sm" %>
                 <% end %>
             </tr>

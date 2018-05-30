@@ -7,6 +7,11 @@ class MealsController < ApplicationController
 
   end
 
+  def new
+    @meal = Meal.new
+    @staffs = Staff.all.where(active: true)
+  end
+
   def create
     if Meal.book_limit(current_user) > 0
       flash[:warning] = "你已经订过了！"
