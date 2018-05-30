@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_24_074436) do
+ActiveRecord::Schema.define(version: 2018_05_30_021351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 2018_05_24_074436) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
   create_table "shoppings", force: :cascade do |t|
@@ -74,6 +84,14 @@ ActiveRecord::Schema.define(version: 2018_05_24_074436) do
     t.index ["last_logout_at", "last_activity_at"], name: "index_staffs_on_last_logout_at_and_last_activity_at"
     t.index ["remember_me_token"], name: "index_staffs_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_staffs_on_reset_password_token"
+  end
+
+  create_table "staffs_roles", id: false, force: :cascade do |t|
+    t.bigint "staff_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_staffs_roles_on_role_id"
+    t.index ["staff_id", "role_id"], name: "index_staffs_roles_on_staff_id_and_role_id"
+    t.index ["staff_id"], name: "index_staffs_roles_on_staff_id"
   end
 
 end

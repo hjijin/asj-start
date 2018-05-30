@@ -1,4 +1,5 @@
 class Staff < ApplicationRecord
+  rolify
   authenticates_with_sorcery!
 
   has_many :shoppings
@@ -22,12 +23,18 @@ class Staff < ApplicationRecord
 
   validates :email, uniqueness: true
 
+  after_create :assign_default_role
+
   def self.create_with_password(attr={})
     generated_password = attr[:phone]
     self.create(attr.merge(password: generated_password, password_confirmation: generated_password))
   end
 
   private
+  def assign_default_role
+    self.add_role(:staff) if self.roles.blank?
+  end
+
   def need_validate_password
     self.new_record? ||
       (!self.password.nil? || !self.password_confirmation.nil?)
