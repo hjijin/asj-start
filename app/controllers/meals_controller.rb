@@ -13,9 +13,15 @@ class MealsController < ApplicationController
   end
 
   def create
-    if Meal.book_limit(current_user) > 0
+    if params[:staff_ids].present?
+      params[:staff_ids].each do |staff|
+        Meal.create(staff_id: staff)
+      end
+      flash[:success] = "补订餐成功！"
+      redirect_to meals_path
+    elsif Meal.book_limit(current_user) > 0
       flash[:warning] = "你已经订过了！"
-      return redirect_to meals_path
+      redirect_to meals_path
     elsif Meal.create(staff_id: params[:staff_id])
       flash[:success] = "订餐成功！"
       redirect_to meals_path
