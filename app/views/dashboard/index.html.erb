@@ -13,8 +13,8 @@
             </div>
             <a href="" class="tx-gray-600 hover-info"><i class="icon ion-more tx-16 lh-0"></i></a>
           </div>
-          <h2 class="mg-b-5 tx-inverse tx-lato">今天：12</h2>
-          <p class="tx-12 mg-b-0">每天十一点前报名。</p>
+          <h2 class="mg-b-5 tx-inverse tx-lato">今天：<%= @count_meals %> </h2>
+          <p class="tx-12 mg-b-0">每天十点前报名。</p>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
             </div>
             <a href="" class="tx-gray-600 hover-info"><i class="icon ion-more tx-16 lh-0"></i></a>
           </div>
-          <h2 class="mg-b-5 tx-inverse tx-lato">今天：￥98</h2>
+          <h2 class="mg-b-5 tx-inverse tx-lato">今天：￥<%= @shopping.total %></h2>
           <p class="tx-12 mg-b-0">每天十点买菜。</p>
         </div>
       </div>
@@ -40,12 +40,12 @@
         <div class="overlay-body pd-x-20 pd-t-20">
           <div class="d-flex justify-content-between">
             <div>
-              <h6 class="tx-12 tx-uppercase tx-inverse tx-bold mg-b-5">人均支持</h6>
+              <h6 class="tx-12 tx-uppercase tx-inverse tx-bold mg-b-5">人均分摊</h6>
               <p class="tx-12">每天分摊</p>
             </div>
             <a href="" class="tx-gray-600 hover-info"><i class="icon ion-more tx-16 lh-0"></i></a>
           </div>
-          <h2 class="mg-b-5 tx-inverse tx-lato">今天：￥13.6</h2>
+          <h2 class="mg-b-5 tx-inverse tx-lato">今天：￥<%= @average %></h2>
           <p class="tx-12 mg-b-0">报名吃饭人员每天分摊菜钱。</p>
         </div>
       </div>

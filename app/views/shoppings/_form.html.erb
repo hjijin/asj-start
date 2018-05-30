@@ -13,7 +13,7 @@
         <div class="col-lg-4">
           <div class="form-group">
             <label class="form-control-label">花费金额: <span class="tx-danger">*</span></label>
-            <%= f.number_field :total, class: "form-control", placeholder: "输入花费金额" %>
+            <%= f.number_field :total, value: number_to_currency(f.object.total.to_f, delimiter: '', unit: ''), step: :any, class: "form-control", placeholder: "输入花费金额" %>
           </div>
         </div>
         <div class="col-lg-4">
