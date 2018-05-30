@@ -1,0 +1,36 @@
+<% provide(:title, "Department") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">部门架构</h6>
+    <p style="margin-bottom: 0;">公司部门划分。</p>
+    <a href="<%= new_department_path %>" class="btn btn-primary pd-lg-x-20 mg-l-auto">新建</a>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>ID</th>
+            <th>部门名称</th>
+            <th>描述</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @departments.each do |department| %>
+            <tr>
+              <td><%= department.name %></td>
+              <td><%= department.description %></td>
+              <td><%= raw(department.active? ? '<span class="tx-success">有效</span>' : '<span class="tx-danger">无效</span>') %></td>
+              <td>
+                <%= link_to "展示", department_path(department), class: "btn btn-secondary btn-sm" %>
+                <%= link_to "编辑", edit_department_path(department), class: "btn btn-warning btn-sm" %>
+                <%= link_to "删除", department, method: :delete, data: { confirm: '你确定要删除吗？' }, class: "btn btn-danger btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

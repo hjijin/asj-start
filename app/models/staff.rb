@@ -4,6 +4,7 @@ class Staff < ApplicationRecord
 
   has_many :shoppings
   has_many :meals
+  belongs_to :department, optional: true
 
   attr_accessor :password, :password_confirmation
 

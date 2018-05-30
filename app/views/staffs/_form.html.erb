@@ -17,7 +17,7 @@
       <div class="row mg-b-25">
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">工号: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">工号: </label>
             <%= f.text_field :job_number, class: "form-control", placeholder: "输入员工工号" %>
           </div>
         </div>
@@ -43,7 +43,7 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">昵称: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">昵称: </label>
             <%= f.text_field :nickname, class: "form-control", placeholder: "输入昵称" %>
           </div>
         </div>
@@ -56,21 +56,21 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">QQ: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">QQ: </label>
             <%= f.text_field :qq, class: "form-control", placeholder: "输入QQ" %>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="form-group">
             <label class="form-control-label">性别: </label>
-            <%= f.text_field :sex, class: "form-control", placeholder: "输入性别" %>
+            <%= f.select :sex, [["男", "男"], ["女", "女"]], { include_blank: '请选择性别' }, class: "form-control" %>
           </div>
         </div>
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">部门: </label>
-            <%= f.text_field :staff_type, class: "form-control", placeholder: "输入部门" %>
+            <label class="form-control-label">部门: <span class="tx-danger">*</span></label>
+            <%= f.select :department_id, @departments.collect { |d| [d.name, d.id] } , { include_blank: '请选择部门' }, class: "form-control" %>
           </div>
         </div>
 
@@ -83,7 +83,7 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">入职日期: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">入职日期: </label>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
               <%= f.date_field :job_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
@@ -93,7 +93,7 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">转正日期: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">转正日期: </label>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
               <%= f.date_field :official_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
@@ -103,7 +103,7 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">离职日期: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">离职日期: </label>
             <div class="input-group">
               <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
               <%= f.date_field :dimission_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>

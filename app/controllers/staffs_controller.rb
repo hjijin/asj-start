@@ -1,5 +1,6 @@
 class StaffsController < ApplicationController
-  before_action :set_staff, only: [:show, :edit, :update, :destroy]
+  before_action :set_staff, only: [:show, :edit, :update, :destroy, :add_admin, :remove_admin]
+  before_action :find_departments, only: [:new, :create, :edit]
 
   # GET /staffs
   # GET /staffs.json
@@ -65,6 +66,20 @@ class StaffsController < ApplicationController
     end
   end
 
+  def add_admin
+    if @staff.add_role :admin
+      flash[:success] = "Staff was successfully added admin."
+      redirect_to staffs_path
+    end
+  end
+
+  def remove_admin
+    if @staff.remove_role :admin
+      flash[:success] = "Staff was successfully removed admin."
+      redirect_to staffs_path
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_staff
@@ -74,5 +89,9 @@ class StaffsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def staff_params
       params.require(:staff).permit!
+    end
+
+    def find_departments
+      @departments = Department.all
     end
 end

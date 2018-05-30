@@ -30,7 +30,7 @@
               <td><%= s.sex %></td>
               <td><%= s.phone %></td>
               <td><%= s.wechat %></td>
-              <td><%= s.staff_type %></td>
+              <td><%= s.department&.name %></td>
               <td><%= s.job_date %></td>
               <td><%= s.official_date %></td>
               <td><%= raw(s.active? ? '<span class="tx-success">在职</span>' : '<span class="tx-danger">离职</span>') %></td>
@@ -38,6 +38,13 @@
                 <%= link_to "展示", staff_path(s), class: "btn btn-secondary btn-sm" %>
                 <%= link_to "编辑", edit_staff_path(s), class: "btn btn-warning btn-sm" %>
                 <%= link_to "删除", s, method: :delete, data: { confirm: '你确定要删除吗？' }, class: "btn btn-danger btn-sm" %>
+                <% if current_user.has_role? :admin %>
+                  <% unless s.has_role? :admin %>
+                    <%= link_to "设置管理员", add_admin_staff_path(s), class: "btn btn-info btn-sm" %>
+                  <% else %>
+                    <%= link_to "取消管理员", remove_admin_staff_path(s), class: "btn btn-indigo btn-sm" %>
+                  <% end %>
+                <% end %>
               </td>
             </tr>
           <% end %>

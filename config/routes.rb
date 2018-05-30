@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :departments
   root "dashboard#index"
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -7,7 +8,12 @@ Rails.application.routes.draw do
 
   resources :shoppings
   resources :meals
-  resources :staffs
+  resources :staffs do
+    member do
+      get :add_admin
+      get :remove_admin
+    end
+  end
   scope 'profile' do
     controller :profile do
       get :password

@@ -12,3 +12,5 @@ Staff.create(
   password_confirmation: 123456,
   email: "ajream.gd@gmail.com"
 )
+
+User.find(1).add_role :admin
