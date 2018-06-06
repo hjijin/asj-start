@@ -21,7 +21,7 @@ class StaffsController < ApplicationController
   # GET /staffs/1/edit
   def edit
     if current_user.id != params[:id].to_i
-      flash[:error] = "you can only edit yourself."
+      flash[:error] = "你只能修改自己的信息."
       redirect_to staffs_path
     end
   end
@@ -31,51 +31,46 @@ class StaffsController < ApplicationController
   def create
     @staff = Staff.create_with_password(staff_params)
 
-    respond_to do |format|
-      if @staff.save
-        format.html { redirect_to staffs_path, notice: 'Staff was successfully created.' }
-        format.json { render :show, status: :created, location: @staff }
-      else
-        format.html { render :new }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
-      end
+    if @staff.save
+      flash[:success] = "信息录入成功。"
+      redirect_to staffs_path
+    else
+      flash[:error] = "信息录入失败。"
+      render :new
     end
   end
 
   # PATCH/PUT /staffs/1
   # PATCH/PUT /staffs/1.json
   def update
-    respond_to do |format|
-      if @staff.update(staff_params)
-        format.html { redirect_to @staff, notice: 'Staff was successfully updated.' }
-        format.json { render :show, status: :ok, location: @staff }
-      else
-        format.html { render :edit }
-        format.json { render json: @staff.errors, status: :unprocessable_entity }
-      end
+    if @staff.update(staff_params)
+      flash[:success] = "信息修改成功。"
+      redirect_to @staff
+    else
+      flash[:warning] = "信息修改失败。"
+      render :edit
     end
   end
 
   # DELETE /staffs/1
   # DELETE /staffs/1.json
   def destroy
-    @staff.update(active: false)
-    respond_to do |format|
-      format.html { redirect_to staffs_url, notice: 'Staff was successfully destroyed.' }
-      format.json { head :no_content }
+    if @staff.update(active: false)
+      flash[:success] = "信息修改成功。"
+      redirect_to staffs_url
     end
   end
 
   def add_admin
     if @staff.add_role :admin
-      flash[:success] = "Staff was successfully added admin."
+      flash[:success] = "设置管理员操作成功。"
       redirect_to staffs_path
     end
   end
 
   def remove_admin
     if @staff.remove_role :admin
-      flash[:success] = "Staff was successfully removed admin."
+      flash[:success] = "撤销管理员操作成功。"
       redirect_to staffs_path
     end
   end

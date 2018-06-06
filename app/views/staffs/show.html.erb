@@ -1,154 +1,156 @@
-  <div class="am-pagebody">
-    <div class="card pd-20 pd-sm-40">
-      <h6 class="card-body-title"><span class="tx-danger"><%= @staff.username %></span>的详情</h6>
-      <p class="mg-b-20 mg-sm-b-30">资料详情展示</p>
-      <div class="row mg-b-20">
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工工号
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.job_number %></p>
-            </div>
-          </div>
-        </div>
+<% provide(:title, "查看信息") %>
 
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工姓名
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.username %></p>
-            </div>
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><span class="tx-danger"><%= @staff.username %></span>的详情</h6>
+    <p class="mg-b-20 mg-sm-b-30">资料详情展示</p>
+    <div class="row mg-b-20">
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工工号
           </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工性别
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.sex %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工手机号
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.phone %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工邮箱
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.email %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工昵称
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.nickname %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工微信
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.wechat %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工QQ
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.qq %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              员工部门
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.department&.name %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              试用期
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.probation_month %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              入职日期
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.job_date %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              转正日期
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.official_date %></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="card rounded-0">
-            <div class="card-header card-header-default">
-              离职日期
-            </div>
-            <div class="card-body bg-gray-200">
-              <p class="mg-b-0"><%= @staff.dimission_date %></p>
-            </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.job_number %></p>
           </div>
         </div>
       </div>
-      <div class="form-layout-footer">
-        <%= link_to '编辑', edit_staff_path(@staff), class: "btn btn-info mg-r-5" %>
-        <%= link_to '返回', staffs_path, class: "btn btn-secondary" %>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工姓名
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.username %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工性别
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.sex %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工手机号
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.phone %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工邮箱
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.email %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工昵称
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.nickname %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工微信
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.wechat %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工QQ
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.qq %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工部门
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.department&.name %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            试用期
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.probation_month %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            入职日期
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.job_date %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            转正日期
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.official_date %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            离职日期
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.dimission_date %></p>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="form-layout-footer">
+      <%= link_to '编辑', edit_staff_path(@staff), class: "btn btn-info mg-r-5" %>
+      <%= link_to '返回', staffs_path, class: "btn btn-secondary" %>
+    </div>
   </div>
+</div>

@@ -1,6 +1,19 @@
 class MealsController < ApplicationController
   def index
-    @meals = Meal.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day, active: true)
+    @date = params[:date].present? ? Date.parse(params[:date]) : Date.today
+
+    if params[:ac] == "previous"
+      @date = @date - 1.day
+    elsif params[:ac] == "after" && Date.today > @date
+      @date = @date + 1.day
+    end
+
+    @meals = Meal.where(created_at: @date.beginning_of_day..@date.end_of_day, active: true)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show

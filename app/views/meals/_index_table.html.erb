@@ -1,0 +1,50 @@
+<div class="card pd-20 pd-sm-40">
+  <h6 class="card-body-title">今天订餐报名情况:
+    <span class="tx-danger">(<%= @meals.count %>)</span>
+    <% if current_user.has_role? :admin %>
+      <a href="<%= new_meal_path %>" class="tx-gray-600 mg-l-10"><i class="icon fa fa-plus lh-0"></i></a>
+    <% end %>
+  </h6>
+  <p class="mg-b-20 mg-sm-b-30">默认只显示当天订餐情况。</p>
+  <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
+    <div class="d-md-flex pd-y-20 pd-md-y-0">
+      <% unless Time.now.hour < 10 %>
+        <span>订餐时间已经结束!下次早点。</span>
+      <% else %>
+        <%= form_tag meals_path(staff_id: current_user.id), method: :post do %>
+          <button type="submit" class="btn btn-info pd-y-13 pd-x-20 bd-0 mg-md-l-10 mg-t-10 mg-md-t-0">订餐</button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <br>
+  <div class="table-responsive mg-t-25">
+    <%= link_to "前一天", meals_path(date: @date, ac: "previous"), class: "btn btn-primary", :remote => true  %>
+    <% if Date.today > @date %>
+      <%= link_to "后一天", meals_path(date: @date, ac: "after"), class: "btn btn-primary pull-right", :remote => true  %>
+    <% end %>
+    <table class="table table-hover table-bordered mg-b-0">
+      <thead class="bg-success">
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @meals.each_with_index do |m, i| %>
+          <tr>
+            <td><%= i += 1 %></td>
+            <td><%= m.staff.username %></td>
+            <td><%= m.created_at.strftime("%F %T") %></td>
+            <td>
+              <% if ((current_user.id == m.staff_id) || (current_user.has_role? :admin)) && Date.today == @date && Time.now.hour < 10 %>
+                <%= link_to '删除', m, method: :delete, data: { confirm: "确定要取消吗？" }, class: "btn btn-danger btn-sm" %>
+              <% end %>
+          </tr>
+          <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
