@@ -1,4 +1,70 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, "购买详情") %>
 
-<%= link_to 'Edit', edit_shopping_path(@shopping) %> |
-<%= link_to 'Back', shoppings_path %>
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title">购买详情</h6>
+    <p class="mg-b-20 mg-sm-b-30">购买详情展示</p>
+    <div class="row mg-b-20">
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            购买者
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @shopping.buyer %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            金额
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @shopping.total %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            日期
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @shopping.shopping_date %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            登记者
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @shopping.staff&.username %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            备注
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @shopping.remark %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-layout-footer">
+      <% if current_user.has_role? :admin %>
+        <%= link_to '编辑', edit_shopping_path(@shopping), class: "btn btn-info mg-r-5" %>
+      <% end %>
+      <%= link_to '返回', shoppings_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

@@ -6,18 +6,22 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if login(params[:phone], params[:password], params[:remember_me])
-      flash[:success] = 'Welcome back!'
+    staff = Staff.find_by(phone: params[:phone])
+    if staff.blank? || !staff.active?
+      flash.now[:warning] = '用户不存在!'
+      render 'new'
+    elsif login(params[:phone], params[:password], params[:remember_me])
+      flash[:success] = '欢迎回来!'
       redirect_back_or_to root_path
     else
-      flash.now[:warning] = 'E-mail or password is incorrect.'
+      flash.now[:warning] = '手机号或者密码错误!'
       render 'new'
     end
   end
 
   def destroy
     logout
-    flash[:success] = 'See you!'
+    flash[:success] = '明天见。'
     redirect_to log_in_path
   end
 end

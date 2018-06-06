@@ -41,7 +41,7 @@ class ShoppingsController < ApplicationController
   # PATCH/PUT /shoppings/1.json
   def update
     respond_to do |format|
-      if @shopping.update(shopping_params)
+      if @shopping.update(shopping_params.merge(staff_id: current_user.id))
         format.html { redirect_to @shopping, notice: 'Shopping was successfully updated.' }
         format.json { render :show, status: :ok, location: @shopping }
       else

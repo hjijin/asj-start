@@ -1,4 +1,4 @@
-<% provide(:title, "Shopping") %>
+<% provide(:title, "购买记录列表") %>
 
 <div class="am-pagebody">
   <div class="card pd-20">
@@ -27,9 +27,11 @@
               <td><%= s.buyer %></td>
               <td><%= s.shopping_date %></td>
               <td>
-                <button class="btn btn-danger btn-sm">删除</button>
-                <%#= link_to 'Edit', edit_shopping_path(shopping) %>
-                <%#= link_to 'Destroy', shopping, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to '展示', s, class: "btn btn-secondary btn-sm" %>
+                <% if (current_user.has_role? :admin) || (s.staff_id == current_user.id)  %>
+                  <%= link_to '编辑', edit_shopping_path(s), class: "btn btn-warning btn-sm" %>
+                  <%= link_to '删除', s, method: :delete, data: { confirm: '你确定要删除吗？' }, class: "btn btn-danger btn-sm" %>
+                <% end %>
               </td>
             </tr>
           <% end %>
