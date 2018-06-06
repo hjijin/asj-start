@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :departments
   root "dashboard#index"
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -20,4 +19,7 @@ Rails.application.routes.draw do
       put :update_password
     end
   end
+
+  resources :departments
+  resources :goods
 end

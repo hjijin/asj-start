@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_30_030849) do
+ActiveRecord::Schema.define(version: 2018_06_06_031949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 2018_05_30_030849) do
     t.string "description", comment: "描述"
     t.integer "position", default: 0, comment: "顺序"
     t.boolean "active", default: true, comment: "有效？"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "goods", force: :cascade do |t|
+    t.integer "staff_id"
+    t.decimal "price", precision: 5, scale: 2
+    t.text "remark"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

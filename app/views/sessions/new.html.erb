@@ -3,29 +3,32 @@
     <div class="row no-gutters">
       <div class="col-lg-5">
         <div>
-          <h2>ASJ-START</h2>
-          <p>Happy Living Space Creator.</p>
-          <p>AiShangJia to create a Guangzhou designer brokerage agency, serving more than 300 interior design studios and personal designers, to create Guangzhou's first VR furniture experience center.</p>
+          <h2>爱上家OA</h2>
+          <p>幸福居住空间缔造者！</p>
+          <p>广州市爱上家信息科技有限公司，系广东省设计师联盟主要创始发起方之一，如今爱上家全力打造广州设计师经纪人机构，服务三百多家室内设计工作室及个人设计师，创建广州第一个VR家具体验中心。</p>
           <hr>
-          <p>Don't have an account?
-            <br> <a href="#">Sign up Now</a></p>
+          <p>你还没有账号？
+            <br>
+            <!-- <a href="#">Sign up Now</a> -->
+            快请联系管理员给你创建吧。
+          </p>
         </div>
       </div>
       <div class="col-lg-7">
         <%= form_tag sessions_path, method: :post do %>
-          <h5 class="tx-gray-800 mg-b-25">Signin to Your Account</h5>
+          <h5 class="tx-gray-800 mg-b-25">用你的账号登录</h5>
           <div class="form-group">
-            <label class="form-control-label">Phone:</label>
-            <%= telephone_field_tag :phone, nil, class: "form-control", placeholder: "Enter your phone number" %>
+            <label class="form-control-label">手机号:</label>
+            <%= telephone_field_tag :phone, nil, class: "form-control", placeholder: "请输入你的手机号" %>
           </div>
           <!-- form-group -->
           <div class="form-group">
-            <label class="form-control-label">Password:</label>
-            <%= password_field_tag :password, nil, class: "form-control", placeholder: "Enter your password" %>
+            <label class="form-control-label">密码:</label>
+            <%= password_field_tag :password, nil, class: "form-control", placeholder: "请输入你的密码" %>
           </div>
           <!-- form-group -->
-          <div class="form-group mg-b-20"><a href="">Reset password</a></div>
-          <button type="submit" class="btn btn-block">Sign In</button>
+          <div class="form-group mg-b-20"><a href="">重置密码</a></div>
+          <button type="submit" class="btn btn-block">登录</button>
         </div>
       <% end %>
       <!-- col-7 -->

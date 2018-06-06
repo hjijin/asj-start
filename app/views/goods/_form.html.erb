@@ -1,0 +1,40 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @good.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
+    <p class="mg-b-20 mg-sm-b-30">请尽可能完整的填写。</p>
+    <%= form_with(model: good, local: true) do |f| %>
+      <% if good.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(good.errors.count, "error") %> prohibited this good from being saved:</h2>
+
+          <ul>
+          <% good.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">金额: <span class="tx-danger">*</span></label>
+            <%= f.text_field :price, class: "form-control", placeholder: "输入金额" %>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="form-group">
+            <label class="form-control-label">备注:</label>
+            <%= f.text_area :remark, class: "form-control", placeholder: "备注购买物品" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">确定</button>
+        <%= link_to '取消', goods_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

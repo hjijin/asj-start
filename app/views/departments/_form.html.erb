@@ -1,7 +1,7 @@
 <div class="am-pagebody">
   <div class="card pd-20 pd-sm-40">
     <h6 class="card-body-title"><%= @department.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
-    <p class="mg-b-20 mg-sm-b-30">每一位员的信息请尽可能完整的填写。</p>
+    <p class="mg-b-20 mg-sm-b-30">请尽可能完整的填写。</p>
     <%= form_with(model: department, local: true) do |f| %>
       <% if department.errors.any? %>
         <div id="error_explanation">

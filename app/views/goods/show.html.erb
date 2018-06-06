@@ -1,17 +1,17 @@
-<% provide(:title, "部门详情") %>
+<% provide(:title, "信息详情") %>
 
 <div class="am-pagebody">
   <div class="card pd-20 pd-sm-40">
-    <h6 class="card-body-title"><span class="tx-danger"><%= @department.name %></span>的详情</h6>
-    <p class="mg-b-20 mg-sm-b-30">资料详情展示</p>
+    <h6 class="card-body-title">信息详情</h6>
+    <p class="mg-b-20 mg-sm-b-30">登记信息详情展示</p>
     <div class="row mg-b-20">
       <div class="col-md-3">
         <div class="card rounded-0">
           <div class="card-header card-header-default">
-            部门名称
+            购买者
           </div>
           <div class="card-body bg-gray-200">
-            <p class="mg-b-0"><%= @department.name %></p>
+            <p class="mg-b-0"><%= @good.staff&.username %></p>
           </div>
         </div>
       </div>
@@ -19,10 +19,10 @@
       <div class="col-md-3">
         <div class="card rounded-0">
           <div class="card-header card-header-default">
-            部门描述
+            金额
           </div>
           <div class="card-body bg-gray-200">
-            <p class="mg-b-0"><%= @department.description %></p>
+            <p class="mg-b-0"><%= @good.price %></p>
           </div>
         </div>
       </div>
@@ -30,10 +30,10 @@
       <div class="col-md-3">
         <div class="card rounded-0">
           <div class="card-header card-header-default">
-            顺序
+            备注
           </div>
           <div class="card-body bg-gray-200">
-            <p class="mg-b-0"><%= @department.position %></p>
+            <p class="mg-b-0"><%= @good.remark %></p>
           </div>
         </div>
       </div>
@@ -41,17 +41,19 @@
       <div class="col-md-3">
         <div class="card rounded-0">
           <div class="card-header card-header-default">
-            是否有效
+            日期
           </div>
           <div class="card-body bg-gray-200">
-            <p class="mg-b-0"><%= raw(@department.active? ? '<span class="tx-success">有效</span>' : '<span class="tx-danger">无效</span>') %></p>
+            <p class="mg-b-0"><%= @good.created_at.strftime('%F')  %></p>
           </div>
         </div>
       </div>
     </div>
     <div class="form-layout-footer">
-      <%= link_to '编辑', edit_department_path(@department), class: "btn btn-info mg-r-5" %>
-      <%= link_to '返回', departments_path, class: "btn btn-secondary" %>
+      <% if current_user.has_role? :admin %>
+        <%= link_to '编辑', edit_good_path(@good), class: "btn btn-info mg-r-5" %>
+      <% end %>
+      <%= link_to '返回', goods_path, class: "btn btn-secondary" %>
     </div>
   </div>
 </div>
