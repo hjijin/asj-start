@@ -15,8 +15,8 @@
             <th>性别</th>
             <th>手机</th>
             <th>微信</th>
+            <th>生日</th>
             <th>部门</th>
-            <th>入职日期</th>
             <th>转正日期</th>
             <th>在职状态</th>
             <th>操作</th>
@@ -30,8 +30,8 @@
               <td><%= s.sex %></td>
               <td><%= s.phone %></td>
               <td><%= s.wechat %></td>
+              <td><%= s.birthday %></td>
               <td><%= s.department&.name %></td>
-              <td><%= s.job_date %></td>
               <td><%= s.official_date %></td>
               <td><%= raw(s.active? ? '<span class="tx-success">在职</span>' : '<span class="tx-danger">离职</span>') %></td>
               <td>

@@ -24,8 +24,10 @@ class Staff < ApplicationRecord
     if: :need_validate_password
 
   validates :email, uniqueness: true
+  validates :birthday, presence: true
 
   after_create :assign_default_role
+  before_save :format_birthday
 
   def self.create_with_password(attr={})
     generated_password = attr[:phone]
@@ -40,6 +42,10 @@ class Staff < ApplicationRecord
   def need_validate_password
     self.new_record? ||
       (!self.password.nil? || !self.password_confirmation.nil?)
+  end
+
+  def format_birthday
+    self.birthday = DateTime.parse(self.birthday).strftime('%Y-%m-%d').to_s
   end
 
   # TODO

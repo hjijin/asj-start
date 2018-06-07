@@ -28,12 +28,14 @@
             <%= f.text_field :username, class: "form-control", placeholder: "输入员工姓名" %>
           </div>
         </div>
+
         <div class="col-lg-4">
           <div class="form-group">
             <label class="form-control-label">手机: <span class="tx-danger">*</span></label>
             <%= f.text_field :phone, class: "form-control", placeholder: "输入手机号" %>
           </div>
         </div>
+
         <div class="col-lg-4">
           <div class="form-group">
             <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
@@ -43,14 +45,22 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">昵称: </label>
-            <%= f.text_field :nickname, class: "form-control", placeholder: "输入昵称" %>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="form-group">
             <label class="form-control-label">微信: <span class="tx-danger">*</span></label>
             <%= f.text_field :wechat, class: "form-control", placeholder: "输入微信" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">生日: <span class="tx-danger">*</span></label>
+            <%= f.text_field :birthday, class: "form-control", placeholder: "输入生日（20171225）" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">昵称: </label>
+            <%= f.text_field :nickname, class: "form-control", placeholder: "输入昵称" %>
           </div>
         </div>
 
@@ -76,7 +86,7 @@
 
         <div class="col-lg-4">
           <div class="form-group">
-            <label class="form-control-label">试用期: </label>
+            <label class="form-control-label">试用期/月: </label>
             <%= f.number_field :probation_month, class: "form-control", placeholder: "输入试用期" %>
           </div>
         </div>
@@ -97,16 +107,6 @@
             <div class="input-group">
               <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
               <%= f.date_field :official_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4">
-          <div class="form-group">
-            <label class="form-control-label">离职日期: </label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
-              <%= f.date_field :dimission_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
             </div>
           </div>
         </div>

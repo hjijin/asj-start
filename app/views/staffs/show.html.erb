@@ -63,10 +63,10 @@
       <div class="col-md-3">
         <div class="card rounded-0">
           <div class="card-header card-header-default">
-            员工昵称
+            员工微信
           </div>
           <div class="card-body bg-gray-200">
-            <p class="mg-b-0"><%= @staff.nickname %></p>
+            <p class="mg-b-0"><%= @staff.wechat %></p>
           </div>
         </div>
       </div>
@@ -74,10 +74,21 @@
       <div class="col-md-3">
         <div class="card rounded-0">
           <div class="card-header card-header-default">
-            员工微信
+            员工生日
           </div>
           <div class="card-body bg-gray-200">
-            <p class="mg-b-0"><%= @staff.wechat %></p>
+            <p class="mg-b-0"><%= @staff.birthday %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            员工昵称
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @staff.nickname %></p>
           </div>
         </div>
       </div>
