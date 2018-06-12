@@ -10,22 +10,20 @@
       <table class="table table-hover table-bordered mg-b-0">
         <thead class="bg-info">
           <tr>
-            <th>ID</th>
+            <th>日期</th>
             <th>登记者</th>
             <th>金额</th>
             <th>备注</th>
-            <th>日期</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
           <% @goods.each do |good| %>
             <tr>
-              <td><%= good.id %></td>
+              <td><%= good.created_at.strftime('%F') %></td>
               <td><%= good.staff&.username %></td>
               <td><%= good.price %></td>
               <td><%= good.remark %></td>
-              <td><%= good.created_at.strftime('%F') %></td>
               <td>
                 <%= link_to '展示', good, class: "btn btn-secondary btn-sm" %>
                 <% if current_user.has_role? :admin %>
