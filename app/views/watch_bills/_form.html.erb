@@ -1,0 +1,60 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @watch_bill.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
+    <%= form_with(model: watch_bill, local: true, class: "form-layout") do |f| %>
+      <% if @watch_bill.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@watch_bill.errors.count, "error") %> prohibited this watch bill from being saved:</h2>
+
+          <ul>
+          <% @watch_bill.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">值班日期: <span class="tx-danger">*</span></label>
+            <%= f.date_field :duty_date, class: "form-control fc-datepicker", placeholder: "MM/DD/YYYY" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">白班: <span class="tx-danger">*</span></label>
+            <%= f.select(:dayshift, Staff.where(active: true).collect { |d| [d.username, d.id] }, {include_hidden: false}, {class: 'form-control select2', multiple: true}) %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">晚班: <span class="tx-danger">*</span></label>
+            <%= f.select(:nightshift, Staff.where(active: true).collect { |d| [d.username, d.id] }, {include_hidden: false}, {class: 'form-control select2', multiple: true}) %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group mg-b-10-force">
+            <label class="form-control-label">兼职生: <span class="tx-danger">*</span></label>
+            <%= f.text_area :remark, class: "form-control", rows: 5, placeholder: "安排当日的兼职生" %>
+          </div>
+        </div>
+      </div>
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">确定</button>
+        <%= link_to '取消', watch_bills_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= content_for :javascripts do %>
+  <script>
+    $('.select2').select2({
+      placeholder: "请选择值班人员",
+      minimumResultsForSearch: Infinity
+    });
+  </script>
+<% end %>

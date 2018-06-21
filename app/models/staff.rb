@@ -6,6 +6,7 @@ class Staff < ApplicationRecord
   has_many :meals
   has_many :goods
   belongs_to :department, optional: true
+  has_many :watch_bills
 
   attr_accessor :password, :password_confirmation
 

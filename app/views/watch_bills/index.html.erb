@@ -1,0 +1,40 @@
+<% provide(:title, "爱上家VR家居馆值班表") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">值班表</h6>
+    <p style="margin-bottom: 0;">安排每日的爱上家VR家居馆值班。</p>
+    <a href="<%= new_watch_bill_path %>" class="btn btn-primary pd-lg-x-20 mg-l-auto">添加</a>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>日期</th>
+            <th>白班（09:00-18:00）</th>
+            <th>晚班（18：00-22:00）</th>
+            <th>兼职生</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <% @watch_bills.each do |watch_bill| %>
+          <tr>
+            <td><%= watch_bill.duty_date %></td>
+            <td><%= Staff.where(id: watch_bill.dayshift)&.pluck(:username).join(", ") %></td>
+            <td><%= Staff.where(id: watch_bill.nightshift)&.pluck(:username).join(", ") %></td>
+            <td><%= watch_bill.remark %></td>
+            <td>
+              <%#= link_to 'Show', watch_bill %>
+              <% if Date.today <= watch_bill.duty_date %>
+                <%= link_to '编辑', edit_watch_bill_path(watch_bill) %>
+                <%= link_to '删除', watch_bill, method: :delete, data: { confirm: '确定要删除吗？' } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <br>
+      <%= paginate @watch_bills %>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,21 @@
         <li class="nav-item">
           <a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?('/') %>">
             <i class="icon ion-ios-home-outline"></i>
-            <span>Dashboard</span>
+            <span>首页</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<%= root_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'vacations' %>">
+            <i class="icon ion-ios-calendar"></i>
+            <span>休假管理</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<%= watch_bills_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'watch_bills' %>">
+            <i class="icon fa fa-bell-o"></i>
+            <span>值班管理</span>
           </a>
         </li>
 
@@ -32,7 +46,7 @@
 
         <li class="nav-item">
           <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'shoppings') || (controller_name.gsub('_', '-') == 'goods')%>"">
-            <i class="icon ion-ios-gear-outline"></i>
+            <i class="icon ion-ios-cart"></i>
             <span>购买管理</span>
           </a>
           <ul class="nav-sub">

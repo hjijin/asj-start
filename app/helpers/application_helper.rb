@@ -3,12 +3,12 @@ module ApplicationHelper
 
   # 页面标题
   def title(page_title='')
-    base_title = 'ASJ-START'
+    base_title = '心胜OA系统'
     page_title.empty? ? base_title : "#{page_title} | #{base_title}"
   end
 
   def am_title(page_title='')
-    base_title = 'ASJ-START'
+    base_title = '心胜OA系统'
     page_title.empty? ? base_title : page_title
   end
 

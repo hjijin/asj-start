@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Duty date:</strong>
+  <%= @watch_bill.duty_date %>
+</p>
+
+<p>
+  <strong>Dayshift:</strong>
+  <%= @watch_bill.dayshift %>
+</p>
+
+<p>
+  <strong>Nightshift:</strong>
+  <%= @watch_bill.nightshift %>
+</p>
+
+<p>
+  <strong>Remark:</strong>
+  <%= @watch_bill.remark %>
+</p>
+
+<p>
+  <strong>Staff:</strong>
+  <%= @watch_bill.staff_id %>
+</p>
+
+<%= link_to 'Edit', edit_watch_bill_path(@watch_bill) %> |
+<%= link_to 'Back', watch_bills_path %>
