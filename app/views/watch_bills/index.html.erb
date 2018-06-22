@@ -26,8 +26,8 @@
             <td>
               <%#= link_to 'Show', watch_bill %>
               <% if Date.today <= watch_bill.duty_date %>
-                <%= link_to '编辑', edit_watch_bill_path(watch_bill) %>
-                <%= link_to '删除', watch_bill, method: :delete, data: { confirm: '确定要删除吗？' } %>
+                <%= link_to '编辑', edit_watch_bill_path(watch_bill), class: "btn btn-warning btn-sm" %>
+                <%= link_to '删除', watch_bill, method: :delete, data: { confirm: '确定要删除吗？' }, class: "btn btn-danger btn-sm" %>
               <% end %>
             </td>
           </tr>

@@ -3,7 +3,7 @@
 <div class="am-pagebody">
   <div class="card pd-20">
     <h6 class="card-body-title">图书列表 <strong><a href="/search">添加书籍</a></strong></h6>
-    <p class="mg-b-10">公司给大家购买书籍学习提升，希望大家在工作之余能够放松一些，一起进步。· · · · · ·</p>
+    <p class="mg-b-10">公司给大家购买书籍学习提升，希望大家在工作之余能够放松一些，一起进步· · · · · ·</p>
 
     <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
       <%= search_form_for @search, html: { class: "d-md-flex", style: "width: 30%;" } do |f| %>
@@ -23,11 +23,11 @@
             <th width="6%">封面</th>
             <th>书名</th>
             <th>副标题</th>
-            <th>出版社</th>
+            <th><%= sort_link(@search, :publisher, '出版社', default_order: :desc) %></th>
             <th>借阅者</th>
             <th>借阅次数</th>
             <th>状态</th>
-            <th>还书日期</th>
+            <th><%= sort_link(@search, :borrow_date, '还书日期', default_order: :desc) %></th>
             <th>操作</th>
           </tr>
         </thead>
@@ -53,7 +53,7 @@
                   <% if b.status %>
                     <button class="btn btn-primary btn-sm circulate" data-id="<%= b.id %>">借阅</button>
                   <% else %>
-                    <button class="btn btn-indigo btn-sm circulate" data-id="<%= b.id %>">归还</button>
+                    <button class="btn btn-info btn-sm circulate" data-id="<%= b.id %>">归还</button>
                   <% end %>
                 <% end %>
                 <% if (current_user.has_role? :admin) %>
