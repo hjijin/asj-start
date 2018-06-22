@@ -1,0 +1,62 @@
+<% provide(:title, "图书列表") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">图书列表 <strong><a href="/search">添加书籍</a></strong></h6>
+    <p class="mg-b-10">公司给大家购买书籍学习提升，希望大家在工作之余能够放松一些，一起进步。· · · · · ·</p>
+
+    <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
+      <%= search_form_for @search, html: { class: "d-md-flex", style: "width: 30%;" } do |f| %>
+      <!-- <form method="get" action="/search" class="d-md-flex" style="width: 30%;"> -->
+        <!-- <input type="text" name="q" class="form-control" placeholder="请输入书名关键字"> -->
+        <%= f.search_field :title_or_subtitle_or_publisher_cont, class: "form-control", placeholder: "请输入书名关键字" %>
+        <%= f.submit "搜索", class: "btn btn-info" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card pd-20">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th width="10%">封面</th>
+            <th>书名</th>
+            <th>副标题</th>
+            <th>出版社</th>
+            <th>借阅者</th>
+            <th>借阅次数</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |b| %>
+            <tr>
+              <td><img src="<%= b.image %>" referrerpolicy="never" alt="网络错误" style="width: 60%;"></td>
+              <td><%= b.title %></td>
+              <td><%= b.subtitle %></td>
+              <td><%= b.publisher %></td>
+              <td><%= b.borrow_id %></td>
+              <td><%= b.borrow_times %></td>
+              <td><span style="color: #fff" class="bg-<%= b.borrow_id.nil? ? 'success' : 'warning' %>"><%= b.borrow_id.nil? ? "还没被借" : "被借走啦" %></span></td>
+              <td>
+                <% if b.borrow_id.nil? %>
+                  <%= link_to '借阅', b, class: "btn btn-primary btn-sm" %>
+                <% else %>
+                  <%= link_to '归还', b, class: "btn btn-indigo btn-sm" %>
+                <% end %>
+                <% if (current_user.has_role? :admin) %>
+                  <%= link_to '编辑', edit_book_path(b), class: "btn btn-warning btn-sm" %>
+                  <%= link_to '删除', b, method: :delete, data: { confirm: '你确定要删除吗？' }, class: "btn btn-danger btn-sm" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <%= paginate @books %>
+    </div>
+  </div>
+</div>

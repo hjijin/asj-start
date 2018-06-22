@@ -1,0 +1,73 @@
+<% provide(:title, "搜索列表") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">图书搜索</h6>
+    <p class="mg-b-10">添加已购买还没有录入的图书· · · · · ·</p>
+
+    <div class="d-flex align-items-center justify-content-center bg-gray-100 ht-md-80 bd pd-x-20">
+      <form method="get" action="/search" class="d-md-flex" style="width: 30%;">
+        <input type="text" name="q" class="form-control" placeholder="请输入书名关键字">
+        <button class="btn btn-info">搜索</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card pd-20">
+    <h6 class="card-body-title">搜索结果</h6>
+    <p style="margin-bottom: 0;">列表数据来源于豆瓣读书。</p>
+    <br>
+    <div class="col-md-12">
+      <div class="list-group widget-list-group">
+        <% @books.each do |book| %>
+          <div class="list-group-item d-flex">
+            <div class="media d-block d-sm-flex">
+              <div class="d-block d-sm-flex mg-sm-r-20">
+                <a href="<%= book["image"] %>" target="_blank">
+                  <img src="<%= book["image"] %>" referrerpolicy="never" alt="网络错误" style="width: 60px; height: 100%;">
+                </a>
+              </div>
+              <div class="media-body mg-t-10 mg-sm-t-0">
+                <h6 class="mg-b-5 tx-14"><a href="https://book.douban.com/subject/<%= book["id"] %>" target="_blank" class="tx-inverse hover-primary"><%= book["title"] %></a></h6>
+                <p class="mg-b-0 tx-12">豆瓣评分：<%= book["rating"]["average"] %> (<%= book["rating"]["numRaters"] %> 人评价)</p>
+                <p class="mg-b-0 tx-12"><%= book["author"].join(" / ") %></p>
+                <p class="mg-b-0 tx-12"><%= book["publisher"] %></p>
+              </div>
+            </div>
+            <button class="btn btn-success pd-lg-x-20 mg-l-auto confirm" data-id="<%= book["id"] %>" data-title="<%= book["title"] %>" data-subtitle="<%= book["subtitle"] %>" data-publisher="<%= book["publisher"] %>" data-image="<%= book["image"] %>"">是这本!</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $('.confirm').click(function(){
+      var book = $(this).data("book");
+      var book_params = {
+        uuid: $(this).data("id"),
+        title: $(this).data("title"),
+        subtitle: $(this).data("subtitle"),
+        publisher: $(this).data("publisher"),
+        image: $(this).data("image")
+      }
+
+      request = $.ajax({
+        url: "/books",
+        type: "POST",
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: { book: book_params }
+      });
+
+      request.done(function (response, textStatus, jqXHR){
+        window.location.href="/books"
+      });
+
+      request.fail(function (jqXHR, textStatus, errorThrown){
+        alert("添加失败")
+    });
+    });
+  </script>
+<% end %>
