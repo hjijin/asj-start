@@ -38,21 +38,19 @@
         </li>
 
         <li class="nav-item">
-          <a href="<%= meals_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'meals' %>">
-            <i class="icon ion-beer"></i>
-            <span>订餐管理</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'shoppings') || (controller_name.gsub('_', '-') == 'goods')%>"">
+          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'shoppings') || (controller_name.gsub('_', '-') == 'goods') || (controller_name.gsub('_', '-') == 'meals') %>"">
             <i class="icon ion-ios-cart"></i>
-            <span>购买管理</span>
+            <span>订餐管理</span>
           </a>
           <ul class="nav-sub">
             <li class="nav-item">
+              <a href="<%= meals_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'meals' %>">订餐报名</a>
+            </li>
+
+            <li class="nav-item">
               <a href="<%= shoppings_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'shoppings' %>">每日菜品</a>
             </li>
+
             <li class="nav-item">
               <a href="<%= goods_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'goods' %>"> 柴米油盐</a>
             </li>
