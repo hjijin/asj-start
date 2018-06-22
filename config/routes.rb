@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   resources :departments
   resources :goods
   resources :watch_bills
-  resources :books
+  resources :books do
+    member do
+      put :circulate
+    end
+  end
   get "search", to:  "books#search"
 end

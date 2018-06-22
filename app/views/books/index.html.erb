@@ -20,31 +20,41 @@
       <table class="table table-hover table-bordered mg-b-0">
         <thead class="bg-info">
           <tr>
-            <th width="10%">封面</th>
+            <th width="6%">封面</th>
             <th>书名</th>
             <th>副标题</th>
             <th>出版社</th>
             <th>借阅者</th>
             <th>借阅次数</th>
             <th>状态</th>
+            <th>还书日期</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
           <% @books.each do |b| %>
             <tr>
-              <td><img src="<%= b.image %>" referrerpolicy="never" alt="网络错误" style="width: 60%;"></td>
+              <td>
+                <a href="https://book.douban.com/subject/<%= b.uuid %>" target="_blank">
+                  <img src="<%= b.image %>" referrerpolicy="never" alt="网络错误" style="width: 100%;">
+                </a>
+              </td>
               <td><%= b.title %></td>
               <td><%= b.subtitle %></td>
               <td><%= b.publisher %></td>
-              <td><%= b.borrow_id %></td>
+              <td><%= b.staff&.username %></td>
               <td><%= b.borrow_times %></td>
-              <td><span style="color: #fff" class="bg-<%= b.borrow_id.nil? ? 'success' : 'warning' %>"><%= b.borrow_id.nil? ? "还没被借" : "被借走啦" %></span></td>
               <td>
-                <% if b.borrow_id.nil? %>
-                  <%= link_to '借阅', b, class: "btn btn-primary btn-sm" %>
-                <% else %>
-                  <%= link_to '归还', b, class: "btn btn-indigo btn-sm" %>
+                <span style="color: #fff" class="bg-<%= b.status? ? 'success' : 'warning' %>"><%= b.status? ? "在馆" : "被借" %></span>
+              </td>
+              <td><%= b.borrow_date %></td>
+              <td>
+                <% if (current_user.has_role? :admin) || current_user.id == b.borrow_id %>
+                  <% if b.status %>
+                    <button class="btn btn-primary btn-sm circulate" data-id="<%= b.id %>">借阅</button>
+                  <% else %>
+                    <button class="btn btn-indigo btn-sm circulate" data-id="<%= b.id %>">归还</button>
+                  <% end %>
                 <% end %>
                 <% if (current_user.has_role? :admin) %>
                   <%= link_to '编辑', edit_book_path(b), class: "btn btn-warning btn-sm" %>
@@ -60,3 +70,24 @@
     </div>
   </div>
 </div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $(".circulate").click(function(){
+      var book_id = $(this).data("id");
+      request = $.ajax({
+        url: "/books/"+ book_id +"/circulate",
+        type: "PUT",
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+      });
+
+      request.done(function (response, textStatus, jqXHR){
+        window.location.href="/books"
+      });
+
+      request.fail(function (jqXHR, textStatus, errorThrown){
+        alert("操作失败！")
+      });
+    })
+  </script>
+<% end %>

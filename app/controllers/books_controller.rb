@@ -1,12 +1,15 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: [:show, :edit, :update, :destroy, :circulate]
 
   # GET /books
   # GET /books.json
   def index
     @q = params[:q].present? ? params[:q] : ""
     @search = Book.ransack(@q)
-    @books = @search.result(distinct: true).page(params[:page] || 1).per(params[:per_page] || 10).order("created_at DESC")
+    @books = @search.result(distinct: true)
+      .includes(:staff)
+      .page(params[:page] || 1).per(params[:per_page] || 10)
+      .order("created_at DESC")
   end
 
   # GET /books/1
@@ -44,7 +47,7 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
+        format.html { redirect_to books_path, notice: 'Book was successfully updated.' }
         format.json { render :show, status: :ok, location: @book }
       else
         format.html { render :edit }
@@ -68,6 +71,17 @@ class BooksController < ApplicationController
     if params[:q]
       books = SearchDouban.search_list(params[:q])
       @books = books["books"]
+    end
+  end
+
+  def circulate
+    if @book.status
+      borrow_times = @book.borrow_times + 1
+      bps = { status: false, borrow_times: borrow_times, borrow_id: current_user.id, borrow_date: Date.today + 15 }
+      @book.update(bps)
+    else
+      bps = { status: true, borrow_date: nil, borrow_id: nil }
+      @book.update(bps)
     end
   end
 
