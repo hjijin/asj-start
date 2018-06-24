@@ -35,6 +35,6 @@ module Start
       g.system_tests nil # Don't generate system test files.
     end
 
-    config.autoload_paths += %W[#{Rails.root}/lib]
+    config.eager_load_paths += %W[#{Rails.root}/lib]
   end
 end
