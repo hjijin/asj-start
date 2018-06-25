@@ -37,7 +37,7 @@
             <% @meals.each_with_index do |m, i| %>
               <tr>
                 <td><%= i += 1 %></td>
-                <td><%= m.staff.username %></td>
+                <td><%= m.staff&.username %></td>
                 <td><%= m.created_at.strftime("%F %T") %></td>
                 <td>
                   <% if ((current_user.id == m.staff_id) || (current_user.has_role? :admin)) && Date.today == @date && Time.now.hour < 10 %>

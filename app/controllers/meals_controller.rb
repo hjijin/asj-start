@@ -1,4 +1,5 @@
 class MealsController < ApplicationController
+  before_action :find_staffs, only: [:new, :create]
   def index
     @date = params[:date].present? ? Date.parse(params[:date]) : Date.today
 
@@ -22,7 +23,6 @@ class MealsController < ApplicationController
 
   def new
     @meal = Meal.new
-    @staffs = Staff.all.where(active: true)
   end
 
   def create
@@ -32,14 +32,19 @@ class MealsController < ApplicationController
       end
       flash[:success] = "补订餐成功！"
       redirect_to meals_path
-    elsif Meal.book_limit(current_user) > 0
-      flash[:warning] = "你已经订过了！"
-      redirect_to meals_path
-    elsif Meal.create(staff_id: params[:staff_id])
-      flash[:success] = "订餐成功！"
-      redirect_to meals_path
+    elsif params[:staff_id]
+      if Meal.book_limit(current_user) > 0
+        flash[:warning] = "你已经订过了！"
+        redirect_to meals_path
+      elsif Meal.create(staff_id: current_user.id)
+        flash[:success] = "订餐成功！"
+        redirect_to meals_path
+      else
+        flash[:error] = "订餐失败。"
+      end
     else
-      flash[:error] = "订餐失败。"
+      flash[:error] = "报名参数有误！"
+      render :new
     end
   end
 
@@ -49,5 +54,10 @@ class MealsController < ApplicationController
       flash[:success] = "取消成功！"
       redirect_to meals_path
     end
+  end
+
+  private
+  def find_staffs
+    @staffs = Staff.all.where(active: true)
   end
 end
