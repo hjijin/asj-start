@@ -38,7 +38,7 @@
               <tr>
                 <td><%= i += 1 %></td>
                 <td><%= m.staff&.username %></td>
-                <td><%= m.created_at.strftime("%F %T") %></td>
+                <td><%= m.created_at.strftime("%F") %></td>
                 <td>
                   <% if ((current_user.id == m.staff_id) || (current_user.has_role? :admin)) && Date.today == @date && Time.now.hour < 10 %>
                     <%= link_to '删除', m, method: :delete, data: { confirm: "确定要取消吗？" }, class: "btn btn-danger btn-sm" %>

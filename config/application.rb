@@ -29,6 +29,9 @@ module Start
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
+    config.time_zone = "Beijing"
+    config.i18n.default_locale = "zh-CN"
+
     config.generators do |g|
       g.assets false
       g.test_framework false
