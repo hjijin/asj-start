@@ -5,7 +5,7 @@ class StaffsController < ApplicationController
   # GET /staffs
   # GET /staffs.json
   def index
-    @staffs = Staff.all.order("created_at DESC")
+    @staffs = Staff.all.order("active DESC, created_at DESC")
   end
 
   # GET /staffs/1
@@ -55,7 +55,7 @@ class StaffsController < ApplicationController
   # DELETE /staffs/1
   # DELETE /staffs/1.json
   def destroy
-    if @staff.update(active: false)
+    if @staff.update_attribute(:active, false)
       flash[:success] = "信息修改成功。"
       redirect_to staffs_url
     end
