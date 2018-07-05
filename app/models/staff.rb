@@ -7,6 +7,7 @@ class Staff < ApplicationRecord
   has_many :goods
   belongs_to :department, optional: true
   has_many :watch_bills
+  has_many :projects, foreign_key: :editor_id
 
   attr_accessor :password, :password_confirmation
 
@@ -46,7 +47,9 @@ class Staff < ApplicationRecord
   end
 
   def format_birthday
-    self.birthday = DateTime.parse(self.birthday).strftime('%Y-%m-%d').to_s
+    unless self.birthday.nil?
+      self.birthday = DateTime.parse(self.birthday).strftime('%Y-%m-%d').to_s
+    end
   end
 
   # TODO
