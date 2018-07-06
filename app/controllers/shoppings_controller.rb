@@ -4,7 +4,7 @@ class ShoppingsController < ApplicationController
   # GET /shoppings
   # GET /shoppings.json
   def index
-    @shoppings = Shopping.all.order("created_at DESC")
+    @shoppings = Shopping.page(params[:page] || 1).per(params[:per_page] || 40).order("shopping_date DESC")
   end
 
   # GET /shoppings/1
