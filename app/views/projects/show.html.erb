@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @project.start_date %>
+</p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @project.area %>
+</p>
+
+<p>
+  <strong>Sub material:</strong>
+  <%= @project.sub_material %>
+</p>
+
+<p>
+  <strong>Main material:</strong>
+  <%= @project.main_material %>
+</p>
+
+<p>
+  <strong>Designer:</strong>
+  <%= @project.designer %>
+</p>
+
+<p>
+  <strong>Assistant:</strong>
+  <%= @project.assistant %>
+</p>
+
+<p>
+  <strong>Level2 assistant:</strong>
+  <%= @project.level2_assistant %>
+</p>
+
+<p>
+  <strong>Level3 assistant:</strong>
+  <%= @project.level3_assistant %>
+</p>
+
+<p>
+  <strong>Project manager:</strong>
+  <%= @project.project_manager %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @project.status %>
+</p>
+
+<p>
+  <strong>Detail:</strong>
+  <%= @project.detail %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

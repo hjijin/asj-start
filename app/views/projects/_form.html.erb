@@ -1,0 +1,77 @@
+<%= form_with(model: project, local: true) do |form| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :area %>
+    <%= form.number_field :area %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sub_material %>
+    <%= form.text_field :sub_material %>
+  </div>
+
+  <div class="field">
+    <%= form.label :main_material %>
+    <%= form.text_field :main_material %>
+  </div>
+
+  <div class="field">
+    <%= form.label :designer %>
+    <%= form.text_field :designer %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assistant %>
+    <%= form.text_field :assistant %>
+  </div>
+
+  <div class="field">
+    <%= form.label :level2_assistant %>
+    <%= form.text_field :level2_assistant %>
+  </div>
+
+  <div class="field">
+    <%= form.label :level3_assistant %>
+    <%= form.text_field :level3_assistant %>
+  </div>
+
+  <div class="field">
+    <%= form.label :project_manager %>
+    <%= form.text_field :project_manager %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.number_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :detail %>
+    <%= form.text_field :detail %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

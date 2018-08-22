@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :projects
   root "dashboard#index"
 
   resources :sessions, only: [:new, :create, :destroy]
