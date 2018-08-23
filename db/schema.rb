@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_27_075844) do
+ActiveRecord::Schema.define(version: 2018_08_22_024221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,34 @@ ActiveRecord::Schema.define(version: 2018_06_27_075844) do
     t.integer "editor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "quotation_categories", force: :cascade do |t|
+    t.string "title"
+    t.integer "weight", default: 0, comment: "位置"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_quotation_categories_on_ancestry"
+    t.index ["title"], name: "index_quotation_categories_on_title"
+  end
+
+  create_table "quotations", force: :cascade do |t|
+    t.integer "quotation_category_id"
+    t.string "code"
+    t.string "name"
+    t.string "unit"
+    t.integer "quantity"
+    t.decimal "material_costs", precision: 5, scale: 2
+    t.decimal "labor_costs", precision: 5, scale: 2
+    t.decimal "total_amount", precision: 5, scale: 2
+    t.text "remark"
+    t.string "status", default: "on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_quotations_on_code"
+    t.index ["name"], name: "index_quotations_on_name"
+    t.index ["quotation_category_id"], name: "index_quotations_on_quotation_category_id"
   end
 
   create_table "roles", force: :cascade do |t|

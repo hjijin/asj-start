@@ -24,18 +24,19 @@
         </li>
 
         <li class="nav-item">
-          <a href="<%= root_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'vacations' %>">
-            <i class="icon ion-ios-calendar"></i>
-            <span>休假管理</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
           <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'projects') %>"">
             <i class="icon fa fa-magic"></i>
             <span>项目工程管理</span>
           </a>
           <ul class="nav-sub">
+            <li class="nav-item">
+              <a href="<%= quotations_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotations' %>">装饰报价清单</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="<%= quotation_categories_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotation_categories' %>">装饰报价分类</a>
+            </li>
+
             <!-- <li class="nav-item">
               <a href="<%#= projects_path %>" class="nav-link <%#= 'active' if controller_name.gsub('_', '-') == 'projects' %>">工程造价</a>
             </li> -->
@@ -44,11 +45,20 @@
         </li>
 
         <li class="nav-item">
-          <a href="<%= watch_bills_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'watch-bills' %>">
-            <i class="icon fa fa-signing"></i>
-            <span>值班管理</span>
+          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'vacations') || (controller_name.gsub('_', '-') == 'watch-bills') %>"">
+            <i class="icon fa fa-calendar"></i>
+            <span>日常管理</span>
           </a>
+          <ul class="nav-sub">
+            <li class="nav-item">
+              <a href="<%#= vacations_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'vacations' %>">休假管理</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= watch_bills_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'watch-bills' %>">值班管理</a>
+            </li>
+          </ul>
         </li>
+
 
         <li class="nav-item">
           <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'shoppings') || (controller_name.gsub('_', '-') == 'goods') || (controller_name.gsub('_', '-') == 'meals') %>"">

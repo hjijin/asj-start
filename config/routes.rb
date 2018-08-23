@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :projects
   root "dashboard#index"
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -14,6 +13,7 @@ Rails.application.routes.draw do
       get :remove_admin
     end
   end
+
   scope 'profile' do
     controller :profile do
       get :password
@@ -30,4 +30,8 @@ Rails.application.routes.draw do
     end
   end
   get "search", to:  "books#search"
+
+  resources :projects
+  resources :quotation_categories
+  resources :quotations
 end

@@ -1,0 +1,73 @@
+<% provide(:title, "爱上家标准报价") %>
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">标准报价清单</h6>
+    <p class="mg-b-20 mg-sm-b-30">爱上家装饰报价清单分类汇总</p>
+    <%= search_form_for @q do |f| %>
+      <div class="d-md-flex">
+        <div id="slWrapper" class="parsley-select wd-200 wd-xs-250">
+          <select name="q[quotation_category_id_eq]" class="form-control select2" data-placeholder="分类搜索" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+            <option label="Choose one"></option>
+          <% @q_categories.each do |c| %>
+            <option value="<%= c.id %>"><%= c.title %></option>
+          <% end %>
+          </select>
+          <div id="slErrorContainer"></div>
+        </div>
+        <div class="mg-md-l-10 mg-t-10 mg-md-t-0">
+          <%= f.submit "搜索", class: "btn btn-info pd-x-15"%>
+        </div>
+        <div class="mg-md-l-100 mg-t-10 mg-md-t-0">
+          <a href="<%= new_quotation_path %>" class="btn btn-primary">添加</a>
+        </div>
+      </div>
+    <% end %>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>序号</th>
+            <th>项目编码</th>
+            <th>项目名称</th>
+            <th>单位</th>
+            <th>数量</th>
+            <th>材料费</th>
+            <th>人工费</th>
+            <th>合计</th>
+            <th>材料及工艺要求</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <% @quotations.each_with_index do |quotation, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= quotation.code %></td>
+            <td><%= quotation.name %></td>
+            <td><%= quotation.unit %></td>
+            <td><%= quotation.quantity %></td>
+            <td><%= quotation.material_costs %></td>
+            <td><%= quotation.labor_costs %></td>
+            <td><%= quotation.total_amount %></td>
+            <td><%= truncate(quotation.remark, length: 20, omission: "...#{quotation.remark[-5, 5]}") %></td>
+            <td>
+              <%= link_to '查看', quotation %>
+              <%= link_to '编辑', edit_quotation_path(quotation) %>
+              <%= link_to '删除', quotation, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <br>
+      <%= paginate @quotations %>
+    </div>
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $(".select2").select2({
+      minimumResultsForSearch: Infinity
+    });
+  </script>
+<% end %>

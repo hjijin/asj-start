@@ -1,0 +1,2 @@
+module QuotationCategoriesHelper
+end

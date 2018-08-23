@@ -1,0 +1,56 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @quotation_category.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
+    <% if quotation_category.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(quotation_category.errors.count, "error") %> prohibited this quotation_category from being saved:</h2>
+        <ul>
+          <% quotation_category.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with(model: quotation_category, local: true, class: "form-layout") do |f| %>
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">分类: <span class="tx-danger">*</span></label>
+
+            <select name="quotation_category[ancestry]"  class="form-control select2" data-placeholder="选择分类">
+              <% @root_categories.each do |category| %>
+                <option></option>
+                <% next if category == @quotation_category %>
+                <option value="<%= category.id %>" <%= @quotation_category.ancestry == category.id.to_s ? 'selected' : '' %>><%= category.title %></option>
+              <% end %>
+            </select>
+            为空为一级分类
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">名称: <span class="tx-danger">*</span></label>
+            <%= f.text_field :title, class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="form-group mg-b-10-force">
+            <label class="form-control-label">权重: <span class="tx-danger">*</span></label>
+            <%= f.text_field :weight, class: "form-control" %> 数值越大越靠前
+          </div>
+        </div>
+      </div>
+      <div class="form-layout-footer">
+        <%= f.submit "确 定", class: "btn btn-info" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $(".select2").select2({
+    });
+  </script>
+<% end %>

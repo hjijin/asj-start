@@ -37,7 +37,8 @@ gem 'rolify', '~> 5.2'
 gem 'kaminari', '1.1.1'
 gem 'httparty', '0.16.2'
 gem 'ransack', '1.8.8'
-gem 'axlsx_rails'
+gem 'axlsx_rails', '0.5.2'
+gem 'ancestry', '3.0.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
