@@ -36,3 +36,7 @@ function msg_show(type, msg) {
   };
   toastr[type](msg); //type:info,error,success,warning
 }
+
+$(".select2").select2({
+  minimumResultsForSearch: Infinity
+});

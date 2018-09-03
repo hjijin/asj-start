@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: :log_in
   delete '/logout', to: 'sessions#destroy', as: :log_out
 
-  resources :shoppings
-  resources :meals
+  resources :shoppings, :meals
   resources :staffs do
     member do
       get :add_admin
@@ -21,9 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :departments
-  resources :goods
-  resources :watch_bills
+  resources :departments, :goods, :watch_bills
   resources :books do
     member do
       put :circulate
@@ -31,7 +28,13 @@ Rails.application.routes.draw do
   end
   get "search", to:  "books#search"
 
-  resources :projects
-  resources :quotation_categories
-  resources :quotations
+  resources :projects, :quotation_categories, :quotations
+  resources :quotation_lists do
+    resources :quotation_list_items, only: [:show, :create, :update, :destroy] do
+      member do
+        get :add_line_item
+        get :remove_line_item
+      end
+    end
+  end
 end

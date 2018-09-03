@@ -39,6 +39,8 @@ gem 'httparty', '0.16.2'
 gem 'ransack', '1.8.8'
 gem 'axlsx_rails', '0.5.2'
 gem 'ancestry', '3.0.2'
+gem 'paper_trail', '9.2'
+gem 'seed-fu', '2.3.9'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

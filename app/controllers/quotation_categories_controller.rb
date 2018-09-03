@@ -5,7 +5,13 @@ class QuotationCategoriesController < ApplicationController
   # GET /quotation_categories
   # GET /quotation_categories.json
   def index
-    @quotation_categories = QuotationCategory.roots.page(params[:page] || 1).per(params[:per_page] || 20).order(id: "DESC")
+    if params[:id].blank?
+      @quotation_categories = QuotationCategory.roots
+    else
+      set_quotation_category
+      @quotation_categories = @quotation_category.children
+    end
+    @quotation_categories = @quotation_categories.page(params[:page] || 1).per(params[:per_page] || 20).order(id: "DESC")
   end
 
   # GET /quotation_categories/new
@@ -38,7 +44,7 @@ class QuotationCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @quotation_category.update(quotation_category_params)
-        format.html { redirect_to @quotation_category, notice: 'Quotation category was successfully updated.' }
+        format.html { redirect_to quotation_categories_path, notice: 'Quotation category was successfully updated.' }
         format.json { render :show, status: :ok, location: @quotation_category }
       else
         format.html { render :edit }
@@ -50,10 +56,13 @@ class QuotationCategoriesController < ApplicationController
   # DELETE /quotation_categories/1
   # DELETE /quotation_categories/1.json
   def destroy
-    @quotation_category.destroy
-    respond_to do |format|
-      format.html { redirect_to quotation_categories_url, notice: 'Quotation category was successfully destroyed.' }
-      format.json { head :no_content }
+    if @quotation_category.is_root?
+      flash[:error] = "没有权限删除一级分类！"
+      redirect_to quotation_categories_url
+    else
+      @quotation_category.destroy
+      flash[:success] = "删除成功！"
+      redirect_to quotation_categories_url
     end
   end
 

@@ -1,0 +1,90 @@
+<% provide(:title, "查看信息") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><span class="tx-danger"><%= @quotation.name %></span>的详情</h6>
+    <p class="mg-b-20 mg-sm-b-30">资料详情展示</p>
+    <div class="row mg-b-20">
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            项目编码
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.code %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            项目名称
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.name %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            单位
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.unit %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            材料费
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.material_costs %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            人工费
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.labor_costs %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            合计
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.total_amount %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            材料及工艺要求
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @quotation.remark %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-layout-footer">
+      <%= link_to '编辑', edit_quotation_path(@quotation), class: "btn btn-info mg-r-5" %>
+      <%= link_to '返回', quotations_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

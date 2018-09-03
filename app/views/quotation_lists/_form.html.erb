@@ -1,0 +1,50 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @quotation_list.new_record? ? "新建" : "修改 ##{@quotation_list.title}#" %></h6>
+    <% if quotation_list.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(quotation_list.errors.count, "error") %> prohibited this quotation_list from being saved:</h2>
+
+        <ul>
+        <% quotation_list.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form_with(model: quotation_list, local: true, class: "form-layout") do |f| %>
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">项目名称: <span class="tx-danger">*</span></label>
+            <%= f.text_field :title, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">业主: <span class="tx-danger">*</span></label>
+            <%= f.text_field :owner, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">工程地址: <span class="tx-danger">*</span></label>
+            <%= f.text_field :address, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">制单人: <span class="tx-danger">*</span></label>
+            <%= f.text_field :maker, class: "form-control", step: :any %>
+          </div>
+        </div>
+      </div>
+      <div class="form-layout-footer">
+        <%= f.submit "确 定", class: "btn btn-info" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_22_024221) do
+ActiveRecord::Schema.define(version: 2018_08_27_083201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,22 +83,64 @@ ActiveRecord::Schema.define(version: 2018_08_22_024221) do
     t.index ["title"], name: "index_quotation_categories_on_title"
   end
 
-  create_table "quotations", force: :cascade do |t|
-    t.integer "quotation_category_id"
+  create_table "quotation_list_items", force: :cascade do |t|
+    t.string "title"
+    t.integer "weight", default: 0, comment: "位置"
+    t.integer "quotation_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quotation_list_line_items", force: :cascade do |t|
+    t.integer "quotation_category0_id"
+    t.integer "quotation_category1_id"
+    t.integer "quotation_category2_id"
     t.string "code"
     t.string "name"
     t.string "unit"
     t.integer "quantity"
-    t.decimal "material_costs", precision: 5, scale: 2
-    t.decimal "labor_costs", precision: 5, scale: 2
-    t.decimal "total_amount", precision: 5, scale: 2
+    t.decimal "material_costs", precision: 7, scale: 2
+    t.decimal "labor_costs", precision: 7, scale: 2
+    t.decimal "total_amount", precision: 7, scale: 2
+    t.text "remark"
+    t.integer "quotation_list_item_id"
+    t.index ["quotation_category0_id"], name: "index_quotation_list_line_items_on_quotation_category0_id"
+    t.index ["quotation_category1_id"], name: "index_quotation_list_line_items_on_quotation_category1_id"
+    t.index ["quotation_category2_id"], name: "index_quotation_list_line_items_on_quotation_category2_id"
+    t.index ["quotation_list_item_id"], name: "index_quotation_list_line_items_on_quotation_list_item_id"
+  end
+
+  create_table "quotation_lists", force: :cascade do |t|
+    t.string "title", comment: "项目名称"
+    t.string "maker", comment: "制单人"
+    t.string "owner", comment: "业主"
+    t.string "address", comment: "工程地址"
+    t.string "status", default: "draft", comment: "项目状态"
+    t.integer "editor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quotations", force: :cascade do |t|
+    t.integer "quotation_category0_id"
+    t.integer "quotation_category1_id"
+    t.integer "quotation_category2_id"
+    t.string "code"
+    t.string "name"
+    t.string "unit"
+    t.integer "quantity"
+    t.decimal "material_costs", precision: 7, scale: 2
+    t.decimal "labor_costs", precision: 7, scale: 2
+    t.decimal "total_amount", precision: 7, scale: 2
     t.text "remark"
     t.string "status", default: "on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_quotations_on_code"
     t.index ["name"], name: "index_quotations_on_name"
-    t.index ["quotation_category_id"], name: "index_quotations_on_quotation_category_id"
+    t.index ["quotation_category0_id"], name: "index_quotations_on_quotation_category0_id"
+    t.index ["quotation_category1_id"], name: "index_quotations_on_quotation_category1_id"
+    t.index ["quotation_category2_id"], name: "index_quotations_on_quotation_category2_id"
   end
 
   create_table "roles", force: :cascade do |t|

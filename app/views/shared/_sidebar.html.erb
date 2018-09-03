@@ -24,17 +24,21 @@
         </li>
 
         <li class="nav-item">
-          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'projects') %>"">
+          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'quotations') || (controller_name.gsub('_', '-') == 'quotation-categories') || (controller_name.gsub('_', '-') == 'quotation-lists') %>"">
             <i class="icon fa fa-magic"></i>
             <span>项目工程管理</span>
           </a>
           <ul class="nav-sub">
             <li class="nav-item">
-              <a href="<%= quotations_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotations' %>">装饰报价清单</a>
+              <a href="<%= quotation_lists_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotation-lists' %>">装饰报价清单</a>
             </li>
 
             <li class="nav-item">
-              <a href="<%= quotation_categories_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotation_categories' %>">装饰报价分类</a>
+              <a href="<%= quotations_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotations' %>">装饰报价总表</a>
+            </li>
+
+            <li class="nav-item">
+              <a href="<%= quotation_categories_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'quotation-categories' %>">装饰报价分类</a>
             </li>
 
             <!-- <li class="nav-item">

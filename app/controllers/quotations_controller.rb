@@ -1,13 +1,26 @@
 class QuotationsController < ApplicationController
   before_action :set_quotation, only: [:show, :edit, :update, :destroy]
-  before_action :find_root_categories, only: [:new, :create, :edit, :update]
+  before_action :find_root_categories, only: [:index, :new, :create, :edit, :update]
 
   # GET /quotations
   # GET /quotations.json
   def index
-    @q_categories ||= QuotationCategory.find_by_title('爱上家装饰报价清单').children.order('weight DESC')
-    @q = Quotation.ransack(params[:q])
-    @quotations = @q.result.page(params[:page] || 1).per(params[:per_page] || 20).order(id: "DESC")
+    if params[:q] && params[:q][:id].present?
+      category_id = params[:q][:id]
+      root_category_id = QuotationCategory.find(category_id).root_id
+      @q = case root_category_id
+          when 1
+            Quotation.ransack(quotation_category0_id_eq: category_id)
+          when 2
+            Quotation.ransack(quotation_category1_id_eq: category_id)
+          when 3
+            Quotation.ransack(quotation_category2_id_eq: category_id)
+          end
+      @quotations = @q.result.page(params[:page] || 1).per(params[:per_page] || 20).order(id: "DESC")
+    else
+      @q = Quotation.ransack(quotation_category0_id_eq: 4)
+      @quotations = @q.result.page(params[:page] || 1).per(params[:per_page] || 20).order(id: "DESC")
+    end
   end
 
   # GET /quotations/1
@@ -76,6 +89,6 @@ class QuotationsController < ApplicationController
     end
 
     def find_root_categories
-      @root_categories = QuotationCategory.roots.order(id: "DESC")
+      @root_categories = QuotationCategory.roots.order(created_at: "ASC")
     end
 end

@@ -1,0 +1,28 @@
+<% @quotation_list_line_items.each do |line_item| %>
+  <tr>
+    <td class="tx-center">
+      <%= line_item.code.split("_").last %>
+    </td>
+    <td>
+      <%= line_item.name %>
+    </td>
+    <td class="tx-12">
+      <%= line_item.unit %>
+    </td>
+    <td class="tx-12">
+      <%= line_item.quantity %>
+    </td>
+    <td class="tx-12">
+      <%= line_item.material_costs %>
+    </td>
+    <td class="tx-12">
+      <%= line_item.labor_costs %>
+    </td>
+    <td class="tx-12">
+      <%= line_item.total_amount %>
+    </td>
+    <td class="pd-l-20 tx-center">
+      <%= link_to "删除", remove_line_item_quotation_list_quotation_list_item_path(@quotation_list.id, line_item.quotation_list_item_id, line_item_id: line_item.id), remote: true %>
+    </td>
+  </tr>
+<% end %>

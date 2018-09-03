@@ -1,0 +1,107 @@
+<% provide(:title, "爱上家标准清单") %>
+<div class="am-pagebody">
+  <div class="row row-sm">
+    <div class="col-lg-7">
+      <div class="card">
+        <div class="card-header bg-transparent pd-20">
+          <h5 class="card-title tx-uppercase tx-14 mg-b-0">
+            <%= @quotation_list_item.title %>
+          </h5>
+          <%= link_to "返回", quotation_list_path(@quotation_list.id), class: "btn btn-outline-primary btn-sm float-right", style: "margin-top: -23px;" %>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-white mg-b-0 tx-12">
+            <tbody id="remote-items">
+              <% @quotation_list_line_items.each do |line_item| %>
+                <tr>
+                  <td class="tx-center">
+                    <%= line_item.code.split("_").last %>
+                  </td>
+                  <td>
+                    <%= line_item.name %>
+                  </td>
+                  <td class="tx-12">
+                    <%= line_item.unit %>
+                  </td>
+                  <td class="tx-12">
+                    <%= line_item.quantity %>
+                  </td>
+                  <td class="tx-12">
+                    <%= line_item.material_costs %>
+                  </td>
+                  <td class="tx-12">
+                    <%= line_item.labor_costs %>
+                  </td>
+                  <td class="tx-12">
+                    <%= line_item.total_amount %>
+                  </td>
+                  <td class="pd-l-20 tx-center">
+                    <%= link_to "删除", remove_line_item_quotation_list_quotation_list_item_path(params[:quotation_list_id], params[:id], line_item_id: line_item.id), remote: true %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div><!-- table-responsive -->
+      </div><!-- card -->
+    </div><!-- col-8 -->
+    <div class="col-lg-5 mg-t-15 mg-sm-t-20 mg-lg-t-0">
+      <div class="card pd-20">
+        <h5 class="tx-14 tx-uppercase tx-inverse tx-bold mg-b-15">选择所需选项</h5>
+        <div id="accordion" class="accordion" role="tablist" aria-multiselectable="true">
+          <% @categories.each_with_index do |category, index| %>
+            <div class="card">
+              <div class="card-header" role="tab" id="heading<%= index %>">
+                <h6 class="mg-b-0">
+                  <a class="transition <%= index == 0 ? 'tx-gray-800' : 'collapsed' %>" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                    <%= category.title %>
+                  </a>
+                </h6>
+              </div><!-- card-header -->
+
+              <div id="collapse<%= index %>" class="collapse <%= 'show' if index == 0 %>" role="tabpanel" aria-labelledby="heading<%= index %>">
+                <table class="table table-primary mg-b-0 tx-12">
+                  <tbody>
+                    <% get_quotations(category.id).each do |quotation| %>
+                    <tr>
+                      <td class="wd-100">
+                        <a href="" class="tx-inverse tx-14 tx-medium d-block"><%= quotation.code.split("_").last %></a>
+                      </td>
+                      <td><%= quotation.name %></td>
+                      <td class="pd-l-20 tx-center">
+                        <%= link_to "添加", add_line_item_quotation_list_quotation_list_item_path(params[:quotation_list_id], params[:id], quotation_id: quotation.id), class: "btn btn-sm btn-outline-primary", remote: true %>
+                        <!-- <button class="btn btn-sm btn-outline-primary add-lime-item" data-category="<%#= quotation.id %>">添加</button> -->
+                      </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= content_for :javascripts do %>
+  <script>
+    // $(".add-lime-item").click(function(){
+    //   var line_item = $(this).data('category');
+
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "<%#= add_line_item_quotation_list_quotation_list_item_path(params[:quotation_list_id], params[:id]) %>",
+    //     data: {
+    //       quotation_id: line_item
+    //     },
+    //     success: function (data) { alert(data); },
+    //     failure: function (errMsg) {
+    //       alert(errMsg);
+    //     }
+    //   })
+    // })
+
+  </script>
+<% end %>

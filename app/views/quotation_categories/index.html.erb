@@ -16,14 +16,17 @@
             <th>操作</th>
           </tr>
         </thead>
-        <% @quotation_categories.each do |quotation_category| %>
+        <% @quotation_categories.each_with_index do |quotation_category, index| %>
           <tr>
-            <td><%= quotation_category.id %></td>
+            <td><%= index + 1 %></td>
             <td><%= quotation_category.title %></td>
             <td><%= quotation_category.weight %></td>
             <td>
-              <%= link_to '编辑', edit_quotation_category_path(quotation_category) %>
-              <%= link_to '删除', quotation_category, method: :delete, data: { confirm: '确认删除吗？' } %>
+              <% if quotation_category.root? %>
+                <%= link_to "查看子分类", quotation_categories_path(id: quotation_category), class: "btn btn-info btn-sm" %>
+              <% end -%>
+              <%= link_to '编辑', edit_quotation_category_path(quotation_category), class: "btn btn-warning btn-sm" %>
+              <%= link_to '删除', quotation_category, method: :delete, data: { confirm: '确认删除吗？' }, class: "btn btn-danger btn-sm"%>
             </td>
           </tr>
         <% end %>

@@ -8,6 +8,7 @@ class Staff < ApplicationRecord
   belongs_to :department, optional: true
   has_many :watch_bills
   has_many :projects, foreign_key: :editor_id
+  has_many :quotation_lists, foreign_key: :editor_id
 
   attr_accessor :password, :password_confirmation
 
