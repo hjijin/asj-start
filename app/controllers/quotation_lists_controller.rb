@@ -1,5 +1,5 @@
 class QuotationListsController < ApplicationController
-  before_action :set_quotation_list, only: [:show, :edit, :update, :destroy, :add_list_item, :remove_list_item]
+  before_action :set_quotation_list, only: [:show, :edit, :update, :destroy, :add_list_item, :remove_list_item, :construction_file]
   before_action :check_permission, only: [:edit, :update, :destroy]
   # GET /quotation_lists
   # GET /quotation_lists.json
@@ -12,7 +12,7 @@ class QuotationListsController < ApplicationController
   def show
     # @q_categories = QuotationCategory.find_by_title('爱上家装饰报价清单').children.order('weight DESC')
     @new_list_item = @quotation_list.quotation_list_items.new
-    @list_item = @quotation_list.quotation_list_items.order("weight ASC")
+    @list_item = @quotation_list.quotation_list_items.order("weight DESC")
     @root_categories = QuotationCategory.roots.order(created_at: "ASC")
 
     respond_to do |format|
@@ -69,6 +69,33 @@ class QuotationListsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to quotation_lists_url, notice: 'Quotation list was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def update_line_item
+    line_item_id =  params["id"].strip
+    line_item_params = {}
+    if params["项目名称"]
+      line_item_params[:name] = params["项目名称"].gsub(" ","")
+    elsif params["单位"]
+      line_item_params[:unit] = params["单位"].gsub(" ","")
+    elsif params["数量"]
+      line_item_params[:quantity] = params["数量"].gsub(" ","")
+    elsif params["材料费"]
+      line_item_params[:material_costs] = params["材料费"].gsub(" ","")
+    elsif params["人工费"]
+      line_item_params[:labor_costs] = params["人工费"].gsub(" ","")
+    end
+    QuotationListLineItem.find(line_item_id).update_attributes(line_item_params)
+  end
+
+  def construction_file
+    @list_item = @quotation_list.quotation_list_items.order("weight DESC")
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        response.headers['Content-Disposition'] = "attachment; filename='爱上家标准报价 #{Time.now.strftime('%F %R')}.xlsx'"
+      }
     end
   end
 

@@ -25,6 +25,7 @@
 //= require theme/flot-spline/jquery.flot.spline
 //= require theme/ResizeSensor
 //= require theme/select2/js/select2.min
+//= require theme/jquery-tabledit/jquery.tabledit
 //= require toastr.min
 //= require_tree .
 

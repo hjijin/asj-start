@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_27_083201) do
+ActiveRecord::Schema.define(version: 2018_09_04_080210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,8 @@ ActiveRecord::Schema.define(version: 2018_08_27_083201) do
     t.decimal "total_amount", precision: 7, scale: 2
     t.text "remark"
     t.integer "quotation_list_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["quotation_category0_id"], name: "index_quotation_list_line_items_on_quotation_category0_id"
     t.index ["quotation_category1_id"], name: "index_quotation_list_line_items_on_quotation_category1_id"
     t.index ["quotation_category2_id"], name: "index_quotation_list_line_items_on_quotation_category2_id"

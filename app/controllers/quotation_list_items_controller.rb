@@ -1,6 +1,6 @@
 class QuotationListItemsController < ApplicationController
   before_action :find_quotation_list, only: [:show, :create, :update, :destroy, :add_line_item, :remove_line_item]
-  before_action :find_quotation_list_item, only: [:show, :add_line_item, :remove_line_item]
+  before_action :find_quotation_list_item, only: [:show, :update, :destroy, :add_line_item, :remove_line_item]
   before_action :find_quotation_list_line_items, only: [:show, :add_line_item, :remove_line_item]
 
   def show
@@ -8,7 +8,7 @@ class QuotationListItemsController < ApplicationController
   end
 
   def create
-    @list_items = @quotation_list.quotation_list_items.new(quotation_list_params)
+    @list_items = @quotation_list.quotation_list_items.new(quotation_list_item_params)
 
     if @list_items.save
       flash[:success] = '创建成功。'
@@ -20,11 +20,20 @@ class QuotationListItemsController < ApplicationController
   end
 
   def update
-
+    if @quotation_list_item.update(quotation_list_item_params)
+      redirect_to @quotation_list
+    else
+      flash["error"] = @quotation_list_item.errors.messages.values.flatten.join(";")
+      redirect_to @quotation_list
+    end
   end
 
   def destroy
-
+    @quotation_list_item.destroy
+    respond_to do |format|
+      format.html { redirect_to @quotation_list, notice: 'Quotation list was successfully destroyed.' }
+      format.json { head :no_content }
+    end
   end
 
   def add_line_item
@@ -66,7 +75,7 @@ class QuotationListItemsController < ApplicationController
   end
 
   private
-  def quotation_list_params
+  def quotation_list_item_params
     params.require(:quotation_list_item).permit!
   end
 

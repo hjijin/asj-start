@@ -30,6 +30,10 @@ Rails.application.routes.draw do
 
   resources :projects, :quotation_categories, :quotations
   resources :quotation_lists do
+    get :update_line_item
+    member do
+      get :construction_file
+    end
     resources :quotation_list_items, only: [:show, :create, :update, :destroy] do
       member do
         get :add_line_item

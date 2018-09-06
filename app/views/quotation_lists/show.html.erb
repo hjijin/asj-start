@@ -4,12 +4,15 @@
     .item-select2 {
       width: 200px;
     }
+    tr.border_bottom th {
+      border-bottom:1pt solid white !important;
+    }
   </style>
 <% end %>
 
 <div class="am-pagebody">
   <div class="card pd-20">
-    <h6 class="card-body-title">标准报价</h6>
+    <h6 class="card-body-title">查看报价清单</h6>
     <p class="mg-b-20 mg-sm-b-30">
       <%= @quotation_list.title %> 报价清单
       <small>
@@ -36,8 +39,8 @@
             <td><%= @quotation_list.address %></td>
             <td><%= @quotation_list.maker %></td>
             <td>
-              <button class="btn btn-outline-primary btn-block btn-sm" data-toggle="modal" data-target="#quotationListItem">
-                <i class="fa fa-plus"></i> 添加报价
+              <button class="btn btn-outline-primary btn-block btn-sm" data-toggle="modal" data-target="#addQuotationListItem">
+                <i class="fa fa-plus"></i> 添加报价项
               </button>
             </td>
           </tr>
@@ -45,7 +48,7 @@
       </table>
 
       <!-- item modal -->
-      <div id="quotationListItem" class="modal fade">
+      <div id="addQuotationListItem" class="modal fade">
         <div class="modal-dialog modal-dialog-vertical-center" role="document">
           <div class="modal-content tx-size-sm">
             <div class="modal-header pd-x-20">
@@ -60,11 +63,11 @@
                   <div class="d-flex">
                     <div class="form-group mg-b-0">
                       <label>类目: <span class="tx-danger">*</span></label>
-                      <%= f.text_field :title, class: "form-control wd-220", placeholder: "输入类目分组名称", required: true %>
+                      <%= f.text_field :title, class: "form-control wd-220", placeholder: "请输入类目分组名称", required: true %>
                     </div><!-- form-group -->
                     <div class="form-group mg-b-0 mg-l-20">
-                      <label>权重: </label>
-                      <%= f.text_field :weight, class: "form-control wd-220", placeholder: "输入类目分组权重" %>
+                      <label>权重: <small>（数字越大越靠前）</small></label>
+                      <%= f.text_field :weight, class: "form-control wd-220", placeholder: "请输入整数" %>
                     </div><!-- form-group -->
                   </div>
                 </div>
@@ -77,29 +80,34 @@
           </div>
         </div>
       </div>
-      <table class="table table-hover table-bordered mg-b-0">
+
+      <% @list_item.each do |item| %>
+        <table class="table table-hover table-bordered mg-b-0 _tabledit">
           <thead class="bg-info">
-            <tr>
-              <th>asdf</th>
-              <th>asdf</th>
-              <th>asdf</th>
-              <th>asdf</th>
-              <th>asdf</th>
-              <th>asdf</th>
+            <tr class="border_bottom">
+              <th colspan="7">
+                <%= form_tag quotation_list_quotation_list_item_path(@quotation_list, item.id), method: :put do %>
+                  <input type="text" name="quotation_list_item[title]" value="<%= item.title %>" />
+                  <input type="text" name="quotation_list_item[weight]" value="<%= item.weight %>" placeholder="请输入整数">
+                  <%= submit_tag "更新" %>
+                <% end %>
+              </th>
               <th>
-                去编辑
+                <%= link_to "删除", quotation_list_quotation_list_item_path(@quotation_list, item.id), method: :delete, data: { confirm: '你确定要删除吗？' }, class: "tx-white hover-white-8" %>
               </th>
             </tr>
-          </thead>
-        </table>
-      <% @list_item.each do |item| %>
-        <table class="table table-hover table-bordered mg-b-0">
-          <thead class="bg-info">
             <tr>
-              <th colspan="7"><%= item.title %></th>
-              <th>
-                <%= link_to quotation_list_quotation_list_item_path(@quotation_list, item.id), class: "tx-white hover-white-8"  do %>
-                  <i class="icon ion-clipboard"></i>去编辑
+              <th style="display: none;">ID</th>
+              <th>项目编码</th>
+              <th>项目名称</th>
+              <th>单位</th>
+              <th>数量</th>
+              <th>材料费</th>
+              <th>人工费</th>
+              <th>合计</th>
+              <th class="tabledit-toolbar-column">
+                <%= link_to quotation_list_quotation_list_item_path(@quotation_list, item.id), class: "tx-warning hover-white-8" do %>
+                  <i class="icon ion-clipboard"></i>去添加
                 <% end %>
               </th>
             </tr>
@@ -107,7 +115,10 @@
           <tbody>
             <% item.quotation_list_line_items.each do |line_item| %>
               <tr>
-                <td class="tx-center">
+                <td style="display: none;">
+                  <%= line_item.id %>
+                </td>
+                <td>
                   <%= line_item.code.split("_").last %>
                 </td>
                 <td>
@@ -141,3 +152,22 @@
     </div>
   </div>
 </div>
+
+<%= content_for :javascripts do %>
+  <script>
+    $('._tabledit').Tabledit({
+      url: "<%= quotation_list_update_line_item_path(@quotation_list.id) %>",
+      rowIdentifier: 'data-id',
+      eventType: 'dblclick',
+      columns: {
+        identifier: [0, 'id'],
+        editable: [[2, '项目名称'], [3, '单位'], [4, '数量']]
+      },
+      editButton: false,
+      deleteButton:false,
+      onSuccess: function() {
+        location.reload();;
+      }
+    });
+  </script>
+<% end %>

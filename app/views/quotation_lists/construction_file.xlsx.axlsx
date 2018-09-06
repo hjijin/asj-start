@@ -18,7 +18,7 @@ wb.styles do |style|
     border: { style: :thin, color: "606060" }
 
 
-  wb.add_worksheet(name: "标准报价") do |sheet|
+  wb.add_worksheet(name: "工程报价") do |sheet|
       sheet.add_row ["爱 上 家 装 饰  报 价 清 单"], style: header, height: 30
       sheet.add_row [nil, "装修业主:    #{@quotation_list.owner}", nil, nil, nil, "工程地址：   #{@quotation_list.address}"], style: [nil, tbl_header, nil, nil, nil, tbl_header], height: 30
 
