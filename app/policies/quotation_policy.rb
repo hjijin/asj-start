@@ -1,6 +1,6 @@
 class QuotationPolicy < ApplicationPolicy
   def admin?
-    !user.has_role?(:admin)
+    user.has_role?(:admin)
   end
 
   def new?
