@@ -25,7 +25,7 @@
 
         <li class="nav-item">
           <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'quotations') || (controller_name.gsub('_', '-') == 'quotation-categories') || (controller_name.gsub('_', '-') == 'quotation-lists') || (controller_name.gsub('_', '-') == 'quotation-list-items') %>"">
-            <i class="icon fa fa-magic"></i>
+            <i class="icon fa fa-cube"></i>
             <span>项目工程管理</span>
           </a>
           <ul class="nav-sub">
@@ -100,10 +100,19 @@
 
         <% if current_user.has_role? :admin %>
           <li class="nav-item">
-            <a href="<%= departments_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'departments' %>">
-              <i class="icon ion-briefcase"></i>
-              <span>部门</span>
+            <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'departments') || (controller_name.gsub('_', '-') == 'roles') %>"">
+              <i class="icon fa fa-cog"></i>
+              <span>设置</span>
             </a>
+            <ul class="nav-sub">
+              <li class="nav-item">
+                <a href="<%= departments_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'departments' %>">部门设置</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="<%= roles_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'roles' %>">权限设置</a>
+              </li>
+            </ul>
           </li>
         <% end %>
       </ul>

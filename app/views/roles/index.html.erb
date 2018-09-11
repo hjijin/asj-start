@@ -1,0 +1,35 @@
+<% provide(:title, "权限管理") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">权限管理</h6>
+    <p style="margin-bottom: 0;">为 Staff 设置相关权限。</p>
+    <a href="<%= new_role_path %>" class="btn btn-primary pd-lg-x-20 mg-l-auto">新建</a>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>ID</th>
+            <th>角色</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @roles.each do |role| %>
+            <tr>
+              <td><%= role.id %></td>
+              <td><%= role.name %></td>
+              <td>
+                <%= link_to '查看', role %>
+                <%= link_to '编辑', edit_role_path(role) %>
+                <%= link_to '删除', role, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </td>
+            </tr>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

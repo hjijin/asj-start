@@ -1,6 +1,7 @@
 class QuotationsController < ApplicationController
   before_action :set_quotation, only: [:show, :edit, :update, :destroy]
   before_action :find_root_categories, only: [:index, :new, :create, :edit, :update]
+  before_action :check_role, only: [:edit, :update, :destroy]
 
   # GET /quotations
   # GET /quotations.json
@@ -31,6 +32,7 @@ class QuotationsController < ApplicationController
   # GET /quotations/new
   def new
     @quotation = Quotation.new
+    authorize @quotation
   end
 
   # GET /quotations/1/edit
@@ -41,7 +43,7 @@ class QuotationsController < ApplicationController
   # POST /quotations.json
   def create
     @quotation = Quotation.new(quotation_params)
-
+    authorize @quotation
     respond_to do |format|
       if @quotation.save
         format.html { redirect_to @quotation, notice: 'Quotation was successfully created.' }
@@ -90,5 +92,9 @@ class QuotationsController < ApplicationController
 
     def find_root_categories
       @root_categories = QuotationCategory.roots.order(created_at: "ASC")
+    end
+
+    def check_role
+      authorize @quotation
     end
 end

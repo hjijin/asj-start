@@ -1,6 +1,6 @@
 class QuotationListsController < ApplicationController
   before_action :set_quotation_list, only: [:show, :edit, :update, :destroy, :add_list_item, :remove_list_item, :construction_file]
-  before_action :check_permission, only: [:edit, :update, :destroy]
+
   # GET /quotation_lists
   # GET /quotation_lists.json
   def index
@@ -30,6 +30,7 @@ class QuotationListsController < ApplicationController
 
   # GET /quotation_lists/1/edit
   def edit
+    authorize(@quotation_list, :can_edit?)
   end
 
   # POST /quotation_lists
@@ -51,6 +52,8 @@ class QuotationListsController < ApplicationController
   # PATCH/PUT /quotation_lists/1
   # PATCH/PUT /quotation_lists/1.json
   def update
+    authorize(@quotation_list, :can_update?)
+
     respond_to do |format|
       if @quotation_list.update(quotation_list_params)
         format.html { redirect_to @quotation_list, notice: 'Quotation list was successfully updated.' }
@@ -65,6 +68,7 @@ class QuotationListsController < ApplicationController
   # DELETE /quotation_lists/1
   # DELETE /quotation_lists/1.json
   def destroy
+    authorize(@quotation_list, :can_destroy?)
     @quotation_list.destroy
     respond_to do |format|
       format.html { redirect_to quotation_lists_url, notice: 'Quotation list was successfully destroyed.' }
@@ -108,11 +112,5 @@ class QuotationListsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_list_params
       params.require(:quotation_list).permit!
-    end
-
-    def check_permission
-      unless @quotation_list.editor == current_user
-        render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
-      end
     end
 end

@@ -1,0 +1,35 @@
+<% provide(:title, "部门详情") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><span class="tx-danger"><%= @role.name %></span> 的详情</h6>
+    <p class="mg-b-20 mg-sm-b-30">角色详情展示</p>
+    <div class="row mg-b-20">
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            角色名称
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @role.name %></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card rounded-0">
+          <div class="card-header card-header-default">
+            拥有该角色的人员名单：
+          </div>
+          <div class="card-body bg-gray-200">
+            <p class="mg-b-0"><%= @role.staffs.blank? ? "null" : @role.staffs.pluck(:username).join(", ") %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-layout-footer">
+      <%= link_to '编辑', edit_role_path(@role), class: "btn btn-info mg-r-5" %>
+      <%= link_to '返回', roles_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

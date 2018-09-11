@@ -1,6 +1,7 @@
 class QuotationCategoriesController < ApplicationController
   before_action :set_quotation_category, only: [:show, :edit, :update, :destroy]
   before_action :find_root_categories, only: [:new, :create, :edit, :update]
+  before_action :check_role, only: [:edit, :update, :destroy]
 
   # GET /quotation_categories
   # GET /quotation_categories.json
@@ -17,6 +18,7 @@ class QuotationCategoriesController < ApplicationController
   # GET /quotation_categories/new
   def new
     @quotation_category = QuotationCategory.new
+    authorize @quotation_category
   end
 
   # GET /quotation_categories/1/edit
@@ -27,6 +29,7 @@ class QuotationCategoriesController < ApplicationController
   # POST /quotation_categories.json
   def create
     @quotation_category = QuotationCategory.new(quotation_category_params)
+    authorize @quotation_category
 
     respond_to do |format|
       if @quotation_category.save
@@ -79,5 +82,9 @@ class QuotationCategoriesController < ApplicationController
 
     def find_root_categories
       @root_categories = QuotationCategory.roots.order(id: "DESC")
+    end
+
+    def check_role
+      authorize @quotation_category
     end
 end

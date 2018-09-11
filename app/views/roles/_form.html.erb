@@ -1,0 +1,33 @@
+<div class="am-pagebody">
+  <div class="card pd-20 pd-sm-40">
+    <h6 class="card-body-title"><%= @role.new_record? ? "新建" : "修改 ##{params[:id]}" %></h6>
+    <p class="mg-b-20 mg-sm-b-30">请尽可能完整的填写。</p>
+    <%= form_with(model: role, local: true) do |f| %>
+      <% if role.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(role.errors.count, "error") %> prohibited this role from being saved:</h2>
+
+          <ul>
+          <% role.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="row mg-b-25">
+        <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">角色名称: <span class="tx-danger">*</span></label>
+            <%= f.text_field :name, class: "form-control", placeholder: "输入角色名称" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">确定</button>
+        <%= link_to '返回', roles_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
