@@ -1,6 +1,6 @@
 class QuotationListPolicy < ApplicationPolicy
   def can_edit?
-    user.has_role?(:admin）|| user == record.editor
+    user.has_role?(:admin)|| user == record.editor
   end
 
 
