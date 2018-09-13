@@ -45,7 +45,6 @@ class QuotationListItemsController < ApplicationController
       code: quotation[:code],
       name: quotation[:name],
       unit: quotation[:unit],
-      quantity: quotation[:quantity],
       material_costs: quotation[:material_costs],
       labor_costs: quotation[:labor_costs],
       total_amount: quotation[:total_amount],
