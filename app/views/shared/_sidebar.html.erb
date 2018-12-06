@@ -49,13 +49,13 @@
         </li>
 
         <li class="nav-item">
-          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'vacations') || (controller_name.gsub('_', '-') == 'watch-bills') %>"">
+          <a href="" class="nav-link with-sub <%= 'active show-sub' if (controller_name.gsub('_', '-') == 'attendances') || (controller_name.gsub('_', '-') == 'watch-bills') %>"">
             <i class="icon fa fa-calendar"></i>
             <span>日常管理</span>
           </a>
           <ul class="nav-sub">
             <li class="nav-item">
-              <a href="<%#= vacations_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'vacations' %>">休假管理</a>
+              <a href="<%= attendances_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'attendances' %>">考勤管理</a>
             </li>
             <li class="nav-item">
               <a href="<%= watch_bills_path %>" class="nav-link <%= 'active' if controller_name.gsub('_', '-') == 'watch-bills' %>">值班管理</a>

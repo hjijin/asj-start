@@ -1,0 +1,64 @@
+<% provide(:title, "考勤列表") %>
+
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">考勤列表
+      <% if (current_user.has_role? :admin) %>
+        <%= form_with url: excel_import_attendances_path, local: true, multipart: true do %>
+          <%= file_field_tag :file %>
+          <%= submit_tag "上传 Excel", "data-disable-with": "Loading..." %>
+        <% end %>
+      <% end %>
+    </h6>
+    <p class="mg-b-10">每月上传上一个月的打卡记录。
+      <% if (current_user.has_role? :admin) %>
+        <%= link_to attendances_path(format: :xlsx), title: "下载文件" do %>
+          <i class="icon icon ion-archive"></i>导出 Excel
+        <% end %>
+      <% end %>
+
+    </p>
+  </div>
+
+  <div class="card pd-20">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th>时间</th>
+            <th>姓名</th>
+            <!-- <th>所属规则</th> -->
+            <th>打卡次数</th>
+            <th>工作时长</th>
+            <th>状态</th>
+            <th>校准状态</th>
+            <th>上班时间</th>
+            <th>下班时间</th>
+            <!-- <th>操作</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <% @attendances.each do |attendance| %>
+            <tr>
+              <td><%= attendance.date_at %></td>
+              <td><%= attendance.name %></td>
+              <!-- <td><%#= attendance.rule %></td> -->
+              <td><%= attendance.times_count %></td>
+              <td><%= attendance.work_hours %></td>
+              <td><%= attendance.status %></td>
+              <td><%= attendance.calibration %></td>
+              <td><%= attendance.start_work %></td>
+              <td><%= attendance.end_work %></td>
+              <!-- <td>
+                <%#= link_to 'Edit', edit_attendance_path(attendance) %>
+                <%#= link_to 'Destroy', attendance, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </td> -->
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <%= paginate @attendances %>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ class Staff < ApplicationRecord
   has_many :watch_bills
   has_many :projects, foreign_key: :editor_id
   has_many :quotation_lists, foreign_key: :editor_id
+  has_many :attendances
 
   attr_accessor :password, :password_confirmation
 

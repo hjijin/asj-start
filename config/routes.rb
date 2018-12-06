@@ -43,4 +43,10 @@ Rails.application.routes.draw do
   end
 
   resources :roles
+
+  resources :attendances, only: [:index] do
+    collection do
+      post :excel_import
+    end
+  end
 end

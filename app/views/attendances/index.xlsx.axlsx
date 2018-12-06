@@ -1,0 +1,31 @@
+col_widths = Array.new(@days+1, 6)
+
+wb = xlsx_package.workbook
+wb.styles do |style|
+  header     = style.add_style sz: 16, b: true, fg_color: "0066ff", alignment: { horizontal: :center, vertical: :center }, border: { style: :thin, color: "606060" }
+  time_header = style.add_style sz: 14, b: true, fg_color: "0066ff", alignment: { horizontal: :right, vertical: :center }, border: { style: :thin, color: "606060" }
+  name_header = style.add_style sz: 14, b: true, fg_color: "0066ff", alignment: { horizontal: :left, vertical: :center }, border: { style: :thin, color: "606060" }
+  tbl_header = style.add_style sz: 14, b: true, alignment: { horizontal: :center, vertical: :center }, border: { style: :thin, color: "606060" }
+  col_header = style.add_style sz: 10, alignment: { horizontal: :center,  vertical: :center, wrap_text: true }, border: { style: :thin, color: "606060" }
+
+  wb.add_worksheet(name: "考勤确认表") do |sheet|
+    sheet.add_row Array.new(@days).unshift("爱上家员工打卡记录表"), style: header, height: 30
+    sheet.merge_cells sheet.rows.last.cells[(0..-1)]
+    sheet.add_row Array.new(@days).unshift("统计时间: #{@beginning_of_month} ~ #{@end_of_month}  制表时间: #{Time.now.strftime("%F %T")}"), style: time_header
+    sheet.merge_cells sheet.rows.last.cells[(0..-1)]
+
+    @group_attendances.each_with_index do |(k, v), i|
+      sheet.add_row Array.new(@days).unshift(k), style: name_header, height: 20
+      sheet.merge_cells sheet.rows.last.cells[(0..-1)]
+      sheet.add_row (1..@days).to_a << "签名", style: tbl_header
+      day_data = Array.new(@days)<< ""
+      v.each do |kaoqin|
+        _index = kaoqin.date_at.strftime("%d").to_i - 1
+        day_data[_index] = "#{kaoqin.start_work}  #{kaoqin.end_work}"
+      end
+      sheet.add_row day_data, style: col_header, height: 24
+    end
+
+    sheet.column_widths *col_widths
+  end
+end
