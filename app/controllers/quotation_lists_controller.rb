@@ -12,7 +12,7 @@ class QuotationListsController < ApplicationController
   def show
     # @q_categories = QuotationCategory.find_by_title('爱上家装饰报价清单').children.order('weight DESC')
     @new_list_item = @quotation_list.quotation_list_items.new
-    @list_item = @quotation_list.quotation_list_items.order("weight DESC")
+    @list_item = @quotation_list.quotation_list_items.order("weight ASC")
     @root_categories = QuotationCategory.roots.order(created_at: "ASC")
 
     respond_to do |format|
