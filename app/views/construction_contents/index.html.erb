@@ -1,0 +1,100 @@
+<div class="am-pagebody">
+  <div class="card pd-20">
+    <h6 class="card-body-title">工程施工清单</h6>
+    <p class="mg-b-20 mg-sm-b-30">
+      <%= @quotation_list.title %> 施工清单
+    </p>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-primary">
+          <tr>
+            <th style="width: 20%;">项目名称</th>
+            <th style="width: 10%;">业主</th>
+            <th>工程地址</th>
+            <th style="width: 10%;">制单人</th>
+            <th style="width: 10%;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @quotation_list.title %></td>
+            <td><%= @quotation_list.owner %></td>
+            <td><%= @quotation_list.address %></td>
+            <td><%= @quotation_list.maker %></td>
+            <td>
+              <button class="btn btn-outline-primary btn-block btn-sm" data-toggle="modal" data-target="#addQuotationListItem">
+                <i class="fa fa-plus"></i> 添加施工项
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- item modal -->
+      <div id="addQuotationListItem" class="modal fade">
+        <div class="modal-dialog modal-dialog-vertical-center" role="document">
+          <div class="modal-content tx-size-sm">
+            <div class="modal-header pd-x-20">
+              <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">施工内容条目</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <%= form_for([@quotation_list, @new_list_item]) do |f| %>
+              <div class="modal-body pd-20">
+                <div class="d-md-flex pd-y-20 pd-md-y-0">
+                  <div class="d-flex">
+                    <div class="form-group mg-b-0">
+                      <label>名称: <span class="tx-danger">*</span></label>
+                      <%= f.text_field :title, class: "form-control wd-220", placeholder: "请输入位置名称", required: true %>
+                    </div><!-- form-group -->
+                    <div class="form-group mg-b-0 mg-l-20">
+                      <label>排序: <small>（数字越大越靠前）</small></label>
+                      <%= f.text_field :position, class: "form-control wd-220", placeholder: "请输入整数" %>
+                    </div><!-- form-group -->
+                  </div>
+                </div>
+                <br>
+                <div class="d-md-flex pd-y-20 pd-md-y-0">
+                    <div class="form-group" style="width: 100%;">
+                      <label>施工内容: <span class="tx-danger">*</span></label>
+                      <%= f.text_area :content, class: "form-control", required: true %>
+                    </div><!-- form-group -->
+                </div>
+              </div><!-- modal-body -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-info pd-x-20">保存</button>
+                <button type="button" class="btn btn-secondary pd-x-20" data-dismiss="modal">取消</button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-hover table-bordered mg-b-0">
+        <thead class="bg-info">
+          <tr>
+            <th style="width: 10%;">位置名称</th>
+            <th>施工内容</th>
+            <th style="width: 10%;">排序</th>
+            <th style="width: 10%;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @quotation_list.construction_contents.each do |construction_content| %>
+            <tr>
+              <td><%= construction_content.title %></td>
+              <td><%= construction_content.content %></td>
+              <td><%= construction_content.position %></td>
+              <td class="pd-l-20 tx-center">
+                <%= link_to quotation_list_construction_content_path(@quotation_list, construction_content), method: :delete, data: { confirm: '你确定要删除吗？' }, class: "btn btn-outline-danger btn-block btn-sm" do %>
+                  <i class="icon ion-backspace"></i> 删除
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

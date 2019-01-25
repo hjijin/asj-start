@@ -14,32 +14,95 @@
     <% end %>
     <%= form_with(model: quotation_list, local: true, class: "form-layout") do |f| %>
       <div class="row mg-b-25">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="form-group">
             <label class="form-control-label">项目名称: <span class="tx-danger">*</span></label>
             <%= f.text_field :title, class: "form-control" %>
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
           <div class="form-group">
-            <label class="form-control-label">业主: <span class="tx-danger">*</span></label>
-            <%= f.text_field :owner, class: "form-control" %>
+            <label class="form-control-label">施工日期: <span class="tx-danger">*</span></label>
+            <%= f.date_field :commencement_date, class: "form-control" %>
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-6">
           <div class="form-group">
-            <label class="form-control-label">工程地址: <span class="tx-danger">*</span></label>
+            <label class="form-control-label">施工地址: <span class="tx-danger">*</span></label>
             <%= f.text_field :address, class: "form-control" %>
           </div>
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">客户姓名: <span class="tx-danger">*</span></label>
+            <%= f.text_field :owner, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">客户电话: <span class="tx-danger">*</span></label>
+            <%= f.text_field :owner_phone, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">施工负责人: <span class="tx-danger">*</span></label>
+            <%= f.text_field :construction_manager, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">施工负责人电话: <span class="tx-danger">*</span></label>
+            <%= f.text_field :construction_manager_phone, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">设    计: <span class="tx-danger">*</span></label>
+            <%= f.text_field :design, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">设计联络电话: <span class="tx-danger">*</span></label>
+            <%= f.text_field :design_phone, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">预算: <span class="tx-danger">*</span></label>
+            <%= f.number_field :budget, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="form-group">
+            <label class="form-control-label">施工面积: <span class="tx-danger">*</span></label>
+            <%= f.number_field :area, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
           <div class="form-group">
             <label class="form-control-label">制单人: <span class="tx-danger">*</span></label>
             <%= f.text_field :maker, class: "form-control", step: :any %>
           </div>
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-control-label">省外？: <span class="tx-danger">*</span></label>
+          <label class="ckbox">
+            <input type="checkbox" name="quotation_list[in_province]" <%= "checked" if @quotation_list.in_province %>><span>工程所在地是否在省外？</span>
+          </label>
         </div>
       </div>
       <div class="form-layout-footer">

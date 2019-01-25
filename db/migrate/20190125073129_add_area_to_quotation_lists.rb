@@ -1,0 +1,5 @@
+class AddAreaToQuotationLists < ActiveRecord::Migration[5.2]
+  def change
+    add_column :quotation_lists, :area, :string
+  end
+end

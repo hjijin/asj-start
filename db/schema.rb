@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_13_080937) do
+ActiveRecord::Schema.define(version: 2019_01_25_073129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,15 @@ ActiveRecord::Schema.define(version: 2018_11_13_080937) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "status", default: true
+  end
+
+  create_table "construction_contents", force: :cascade do |t|
+    t.integer "quotation_list_id"
+    t.string "title"
+    t.text "content"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "departments", force: :cascade do |t|
@@ -138,6 +147,15 @@ ActiveRecord::Schema.define(version: 2018_11_13_080937) do
     t.integer "editor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "commencement_date", comment: "施工日期"
+    t.string "construction_manager", comment: "施工负责人"
+    t.string "construction_manager_phone", comment: "施工负责人电话"
+    t.string "design", comment: "设计"
+    t.string "design_phone", comment: "设计电话"
+    t.decimal "budget", comment: "预算"
+    t.boolean "in_province", default: false, comment: "是否省外"
+    t.string "owner_phone", comment: "客户电话"
+    t.string "area"
   end
 
   create_table "quotations", force: :cascade do |t|

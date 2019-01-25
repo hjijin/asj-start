@@ -1,4 +1,4 @@
-col_widths = [6, 20, 20, 10, 10, 10, 10, 10, 120]
+col_widths = [6, 20, 20, 10, 10, 10, 10, 20, 120]
 
 wb = xlsx_package.workbook
 wb.styles do |style|
@@ -17,85 +17,222 @@ wb.styles do |style|
     alignment: { horizontal: :center, vertical: :center },
     border: { style: :thin, color: "606060" }
 
+  common_boder = style.add_style border: { style: :thin, color: "606060" }
+
+  ql_total_amount = @quotation_list.quotation_list_line_items.sum(:total_amount)
+  if_province = @quotation_list.in_province? ? ql_total_amount*0.08 : 0.00
+  sum_quotation_list = ql_total_amount + ql_total_amount*0.08 + if_province
+
+  cover = style.add_style sz: 28, b: true, shadow: true, alignment: { horizontal: :center, vertical: :center }
+  cover_budget = style.add_style sz: 24, b: true, shadow: true, alignment: { horizontal: :center, vertical: :center }
+  cover_content = style.add_style sz: 16, b: true, shadow: true, alignment: { horizontal: :left, vertical: :center }
+  # 封面
+  wb.add_worksheet(name: "封面") do |sheet|
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["爱  上  家  装  饰  设  计  工  程  有  限  公  司"], style: cover, height: 40
+    sheet.add_row [], height: 35
+    sheet.add_row ["预  算  报  价  书"], style: cover_budget, height: 30
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row [nil, nil, nil, "合同编号：ASJ-#{@quotation_list.created_at.strftime("%y-%m%d")}"], style: cover_content, height: 20
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row [nil, nil, nil, "客户姓名：#{@quotation_list.owner}"], style: cover_content, height: 20
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row [nil, nil, nil, "装潢地址：#{@quotation_list.address}"], style: cover_content, height: 20
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row [nil, nil, nil, "日    期：#{Time.now.strftime("%F")}"], style: cover_content, height: 20
+
+    %w(A6:I6 A8:I8 D12:I12 D15:I15 D18:I18 D21:I21).each { |range| sheet.merge_cells(range) }
+    sheet.column_widths 10, 15, 15, 15, 15, 15, 15, 15, 10
+  end
+
+  # 施工内容
+  cc_header       = style.add_style sz: 22, b: true, shadow: true, alignment: { horizontal: :center, vertical: :center }
+  cc_sub_header   = style.add_style sz: 12, b: true, shadow: true, alignment: { horizontal: :right, vertical: :center }
+  cc_content_key  = style.add_style sz: 14, b: true, shadow: true, alignment: { horizontal: :right, vertical: :center },
+    border: { style: :thin, color: "606060" }
+  cc_content_val  = style.add_style sz: 14, shadow: true, alignment: { horizontal: :left, vertical: :center, wrap_text: true },
+    border: { style: :thin, color: "606060" }
+  cc_money        = style.add_style sz: 14, num_fmt: 2, alignment: { horizontal: :right, vertical: :center },
+    border: { style: :thin, color: "606060" }
+  construction_conten_header = style.add_style sz: 20, b: true, shadow: true, alignment: { horizontal: :center, vertical: :center }, border: { style: :thin, color: "606060" }
+  construction_content = style.add_style sz: 16, b: true, shadow: true, alignment: { horizontal: :right, vertical: :center },
+    border: { style: :thin, color: "606060" }
+
+  cc_horizontal = style.add_style alignment: { horizontal: :right, vertical: :center }
+  wb.add_worksheet(name: "施工内容") do |sheet|
+    sheet.add_row [nil, "爱 上 家 装 饰 评 审 表（施工内容单）", nil], style: cc_header, height: 30
+    sheet.add_row [nil, nil, nil, nil, "合同编号:", "ASJ-#{@quotation_list.created_at.strftime("%y-%m%d")}", nil], style: cc_sub_header, height: 15
+    sheet.add_row ["客户姓名：", "#{@quotation_list.owner}",nil, "施工地址：", "#{@quotation_list.address}", nil, nil], style: [cc_content_key, cc_content_val, common_boder, cc_content_key, cc_content_val, common_boder, common_boder], height: 20
+    sheet.add_row ["客户电话：", "#{@quotation_list.owner_phone}",nil,"施工日期：", "#{@quotation_list.commencement_date}", nil, nil], style: [cc_content_key, cc_content_val, common_boder, cc_content_key, cc_content_val, common_boder, common_boder], height: 20
+    sheet.add_row ["施工负责人：", "#{@quotation_list.construction_manager}", nil,"联络电话：", "#{@quotation_list.construction_manager_phone}",nil, nil], style: [cc_content_key, cc_content_val, common_boder, cc_content_key, cc_content_val, common_boder, common_boder], height: 20
+    sheet.add_row ["设    计：", "#{@quotation_list.design}", nil,"联络电话：", "#{@quotation_list.design_phone}",nil, nil], style: [cc_content_key, cc_content_val, common_boder, cc_content_key, cc_content_val, common_boder, common_boder], height: 20
+    sheet.add_row ["预    算：", "#{@quotation_list.budget}", nil, "备    注：", nil, nil,nil], style: [cc_content_key, cc_money, common_boder, cc_content_key, cc_content_val, common_boder, common_boder], height: 20
+
+    sheet.add_row ["装 饰 设 计 施 工 内 容 ", nil, nil, nil, nil, nil, nil], style: [construction_conten_header, common_boder, common_boder, common_boder, common_boder, common_boder, common_boder], height: 25
+    @quotation_list.construction_contents.each_with_index do |cc, index|
+      sheet.add_row ["#{cc.title}：", cc.content, nil, nil, nil, nil, nil], style: [construction_content, cc_content_val, common_boder, common_boder, common_boder, common_boder, common_boder], height: (cc.content.length/56.0).ceil*20
+      sheet.merge_cells("B#{index + 9}:G#{index + 9}")
+    end
+
+    last_second_row = sheet.add_row ["工程期间如有项目增减以施工时增减变更签证为准"], style: cc_horizontal
+
+    row_index = sheet.rows.index(last_second_row) + 1
+    sheet.merge_cells("A#{row_index}:G#{row_index}")
+
+    sheet.add_row
+
+    sheet.add_row [nil, nil, nil, "客户签名：", nil, "日期：", nil], style: cc_horizontal
+
+    %w(B1:F1 B3:C3 E3:G3 B4:C4 E4:G4 B5:C5 E5:G5 B6:C6 E6:G6 B7:C7 E7:G7 A8:G8).each { |range| sheet.merge_cells(range) }
+    sheet.column_widths 20, 20, 20, 20, 20, 20, 20
+  end
+
+  # 预算报价费用组成表
+  zc_header = style.add_style sz: 18, b: true, shadow: true, alignment: { horizontal: :center, vertical: :center }
+  zc_boder = style.add_style sz: 14, alignment: { vertical: :center }, border: { style: :thick, color: "606060", edges: [:bottom] }
+  sign = style.add_style sz: 14, b: true, shadow: true, alignment: { horizontal: :left, vertical: :center }
+  wb.add_worksheet(name: "预算报价费用组成表") do |sheet|
+    sheet.add_row ["预算报价费用组成表", nil, nil, nil, nil, nil, nil], style: zc_header, height: 30
+    sheet.merge_cells("A1:G1")
+    sheet.add_row [nil, "（一）", "工程人工辅材直接费", nil, nil, ql_total_amount, nil], style: [nil, zc_boder, zc_boder, zc_boder, zc_boder, zc_boder, nil], height: 18
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row [nil, "（二）", "管理费：（不含税,一次性收取）", nil, nil, ql_total_amount*0.08, nil], style: [nil, zc_boder, zc_boder, zc_boder, zc_boder, zc_boder, nil], height: 18
+    sheet.add_row [nil, "注明:", "按工程人工辅材费用×8％计算", nil, nil, nil, nil]
+    sheet.add_row
+    sheet.add_row [nil, "（三）", "远程费：（不含税,一次性收取）", nil, nil, if_province, nil], style: [nil, zc_boder, zc_boder, zc_boder, zc_boder, zc_boder, nil], height: 18
+    sheet.add_row [nil, "注明:", "按工程人工辅材费用×8％计算", nil, nil, nil, nil]
+    sheet.add_row
+    sheet.add_row [nil, "（四）", "税金：（一次性收取）", nil, nil, "0.00", nil], style: [nil, zc_boder, zc_boder, zc_boder, zc_boder, zc_boder, nil], height: 18
+    sheet.add_row [nil, "注明：", "以开票标准为准", nil, nil, nil, nil]
+    sheet.add_row [nil, "（五）", "工程总造价：", nil, nil, sum_quotation_list, nil], style: [nil, zc_boder, zc_boder, zc_boder, zc_boder, zc_boder, nil], height: 18
+    sheet.add_row [nil, nil, "[（一）+（二）+（三）]+（四）]", nil, nil, nil, nil]
+    sheet.add_row
+    sheet.add_row [nil, nil, "客户（签字）：", nil, nil, nil, nil], style: [nil, nil, sign, nil, nil, nil, nil], height: 28
+    sheet.add_row [nil, nil, "预算（签字）：", nil, nil, nil, nil], style: [nil, nil, sign, nil, nil, nil, nil], height: 28
+    sheet.add_row [nil, nil, "经理（签字）：", nil, nil, nil, nil], style: [nil, nil, sign, nil, nil, nil, nil], height: 28
+    sheet.add_row [nil, nil, "签字日期：", nil, nil, nil, nil], style: [nil, nil, sign, nil, nil, nil, nil], height: 28
+    sheet.add_row
+    sheet.add_row [nil, "注：", '此预算单"数量"项为估算，按实际结算,如有增加或更改项目按"工程变更单"为准；', nil, nil, nil, nil]
+    sheet.add_row [nil, nil, "此预算只为施工工程项目费用，不包含物业管理费、城建、报建手续及其它费用；", nil, nil, nil, nil]
+    sheet.add_row [nil, nil, "此预算项目未包含部分为业主自购件，所有自购材料须及时提供到现场；", nil, nil, nil, nil]
+    sheet.add_row [nil, nil, "此预算出具依据为设计图纸，如设计有变更则本预算随之变更；", nil, nil, nil, nil]
+
+    sheet.column_widths 8, 6, 40, 15, 15, 12, 8
+  end
+
+  wb.add_worksheet(name: "工程主材预算表") do |sheet|
+    sheet.add_row ["爱上家咨询  家庭装潢材料费预算单"]
+  end
 
   wb.add_worksheet(name: "标准报价") do |sheet|
-      sheet.add_row ["爱 上 家 装 饰  报 价 清 单"], style: header, height: 30
-      sheet.add_row [nil, "装修业主:    #{@quotation_list.owner}", nil, nil, nil, "工程地址：   #{@quotation_list.address}"], style: [nil, tbl_header, nil, nil, nil, tbl_header], height: 30
+    sheet.add_row ["爱 上 家 装 饰  报 价 清 单"], style: header, height: 30
+    sheet.add_row [nil, "装修业主:    #{@quotation_list.owner}", nil, nil, nil, "工程地址：   #{@quotation_list.address}"], style: [nil, tbl_header, nil, nil, nil, tbl_header], height: 30
 
-      sheet.add_row ["提醒客户", "1、如果您先做预算（指施工图纸尚未确认），此报价仅供您参考或做为签定施工合同的参考依据，公司保留依施工图纸所用材料和加工件复杂系数，修订项目单价的权力。"], style: content, height: 20
-      sheet.add_row [nil, "2、施工中如有增减项目，需经甲乙双方确认后按实际施工项目结算工程款。"], style: content, height: 20
-      sheet.add_row [nil, "3、客户装修房屋的任何构件（非我方施工主体物件）如可能影响我方施工，无论是拆卸、改造或是用其他办法处理，敬请业主承担费用。"], style: content, height: 20
-      sheet.add_row [nil, "4、此报价未含管理处各项收费，管理处收费除由我方承担的工人出入证外，其余款项敬请您承担。"], style: content, height: 20
-      sheet.add_row [nil, "5、此报价未含材料（活动家具、橱衣柜定制家具、电器、窗帘、灯具、瓷砖、定制门窗、卫浴洁具等软、硬装主材产品）。"], style: content, height: 20
+    sheet.add_row ["提醒客户", "1、如果您先做预算（指施工图纸尚未确认），此报价仅供您参考或做为签定施工合同的参考依据，公司保留依施工图纸所用材料和加工件复杂系数，修订项目单价的权力。"], style: content, height: 20
+    sheet.add_row [nil, "2、施工中如有增减项目，需经甲乙双方确认后按实际施工项目结算工程款。"], style: content, height: 20
+    sheet.add_row [nil, "3、客户装修房屋的任何构件（非我方施工主体物件）如可能影响我方施工，无论是拆卸、改造或是用其他办法处理，敬请业主承担费用。"], style: content, height: 20
+    sheet.add_row [nil, "4、此报价未含管理处各项收费，管理处收费除由我方承担的工人出入证外，其余款项敬请您承担。"], style: content, height: 20
+    sheet.add_row [nil, "5、此报价未含材料（活动家具、橱衣柜定制家具、电器、窗帘、灯具、瓷砖、定制门窗、卫浴洁具等软、硬装主材产品）。"], style: content, height: 20
 
-      sheet.add_row %w(序号 项目编码 项目名称 单位 数量 材料费 人工费 合价 材料及工艺要求), style: ind_header, height: 20
+    sheet.add_row %w(序号 项目编码 项目名称 单位 数量 材料费 人工费 合价 材料及工艺要求), style: ind_header, height: 20
 
-      %w(A1:I1 B2:E2 F2:I2 A3:A7 B3:I3 B4:I4 B5:I5 B6:I6 B7:I7).each { |range| sheet.merge_cells(range) }
+    %w(A1:I1 B2:E2 F2:I2 A3:A7 B3:I3 B4:I4 B5:I5 B6:I6 B7:I7).each { |range| sheet.merge_cells(range) }
 
-      # sheet.sheet_view do |vs|
-      #   vs.pane do |pane|
-      #     pane.state = :frozen
-      #     pane.x_split = 9
-      #     pane.y_split = 8
-      #   end
-      # end
-
-      row_id = 9
-      @list_item.each do |item|
-        sheet.add_row [item.title], style: col_header, height: 20
-        sheet.merge_cells("A#{row_id}:I#{row_id}")
-        row_id += 1
-        line_items = item.quotation_list_line_items
-        line_items.each_with_index do |line_item, index|
-          sheet.add_row [index+1, line_item.code, line_item.name, line_item.unit, line_item.quantity, line_item.material_costs, line_item.labor_costs, line_item.total_amount, line_item.remark], height: 30, style: [label, label, label, label, label, money, money, money_col, remark]
-        end
-        sum_begin = row_id
-        sum_end = row_id + line_items.length - 1
-
-        sheet.add_row [nil, nil, "小计", nil, nil, "=SUM(F#{sum_begin}:F#{sum_end})", "=SUM(G#{sum_begin}:G#{sum_end})", "=SUM(H#{sum_begin}:H#{sum_end})", nil], style: subtotal, height: 20
-
-        row_id = sum_end + 2
+    row_id = 9
+    @list_item.each do |item|
+      sheet.add_row [item.title], style: col_header, height: 20
+      sheet.merge_cells("A#{row_id}:I#{row_id}")
+      row_id += 1
+      line_items = item.quotation_list_line_items
+      line_items.each_with_index do |line_item, index|
+        sheet.add_row [index+1, line_item.code, line_item.name, line_item.unit, line_item.quantity, line_item.material_costs, line_item.labor_costs, line_item.total_amount, line_item.remark], height: 30, style: [label, label, label, label, label, money, money, money_col, remark]
       end
+      sum_begin = row_id
+      sum_end = row_id + line_items.length - 1
 
-      sheet.add_row [nil, nil, "合计", nil, nil, @quotation_list.quotation_list_line_items.sum(:material_costs), @quotation_list.quotation_list_line_items.sum(:labor_costs), @quotation_list.quotation_list_line_items.sum(:total_amount), "不含税"], style: col_calculate, height: 30
-      sheet.add_row ["十一", nil, "工程管理费8%", "项", nil, nil, nil, 0.00, "不含税"], style: col_calculate, height: 30
-      sheet.add_row ["十二", nil, "工程管理费8%", "项", nil, nil, nil, 0.00, "广州市外需增加此项，不含税"], style: col_calculate, height: 30
-      sheet.add_row [nil, nil, "总计", nil, nil, nil, nil, 0.00, "不含税"], style: col_calculate, height: 30
+      sheet.add_row [nil, nil, "小计", nil, nil, "=SUM(F#{sum_begin}:F#{sum_end})", "=SUM(G#{sum_begin}:G#{sum_end})", "=SUM(H#{sum_begin}:H#{sum_end})", nil], style: subtotal, height: 20
 
-      row = sheet.add_row ["十二、备注"], style: col_header, height: 20
-      row_index = sheet.rows.index(row) + 1
-      sheet.merge_cells("A#{row_index}:I#{row_index}")
-      sheet.add_row [1, nil, "本报价不含税金(税金为12%)"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 1}:I#{row_index+ 1}")
-      sheet.add_row [2, nil, "结算以最后实际尺寸数为准"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 2}:I#{row_index+ 2}")
-      sheet.add_row [3, nil, "电路布装按位计算方式如下："], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 3}:I#{row_index+ 3}")
-      sheet.add_row [4, nil, "    ①插座按单位面板数量计位"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 4}:I#{row_index+ 4}")
-      sheet.add_row [5, nil, "    ②筒灯、射灯、光管、吸顶灯、壁灯按发光体计位。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 5}:I#{row_index+ 5}")
-      sheet.add_row [6, nil, "    ③暗灯槽一制控制，首两支计二位，后面每支灯计半位。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 6}:I#{row_index+ 6}")
-      sheet.add_row [7, nil, "    ④大吊灯计三位，双路供电加一位，超出十个发光体的以后每三个发光体加一位。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 7}:I#{row_index+ 7}")
-      sheet.add_row [8, nil, "    ⑤双联开关加一位计算，三联开关加三位计算。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 8}:I#{row_index+ 8}")
-      sheet.add_row [9, nil, "    ⑥电脑网络插、电话插、电视插按一位计算，空调专线插按二位计算。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 9}:I#{row_index+ 9}")
-      sheet.add_row [10, nil, "    ⑦音响线按出线数量计位。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 10}:I#{row_index+ 10}")
-      sheet.add_row [11, nil, "    ⑧空调排水管按出线数量计位。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 11}:I#{row_index+ 11}")
-      sheet.add_row [12, nil, "业主提供的材料由业主负责送到施工现场。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 12}:I#{row_index+ 12}")
-      sheet.add_row [13, nil, "如果在施工期间变更材料，或在施工期间才选定的材料超出报价的价格，则业主需补回差价。"], style: [label, nil, nil], height: 20
-      sheet.merge_cells("C#{row_index + 13}:I#{row_index+ 13}")
+      row_id = sum_end + 2
+    end
 
-      last_row = sheet.add_row [nil, "制单人：#{@quotation_list.maker}              审核人：系统管理人员             业主签名："], height: 40, style: footer
-      last_row_index = sheet.rows.index(last_row) + 1
-      sheet.merge_cells("B#{last_row_index}:I#{last_row_index}")
+    sheet.add_row [nil, nil, "合计", nil, nil, @quotation_list.quotation_list_line_items.sum(:material_costs), @quotation_list.quotation_list_line_items.sum(:labor_costs), ql_total_amount, "不含税"], style: col_calculate, height: 30
+    sheet.add_row ["十一", nil, "工程管理费8%", "项", nil, nil, nil, ql_total_amount*0.08, "不含税"], style: col_calculate, height: 30
+    sheet.add_row ["十二", nil, "工程管理费8%", "项", nil, nil, nil, if_province, "广州市外需增加此项，不含税"], style: col_calculate, height: 30
+    sheet.add_row [nil, nil, "总计", nil, nil, nil, nil, sum_quotation_list, "不含税"], style: col_calculate, height: 30
 
-      sheet.column_widths *col_widths
+    row = sheet.add_row ["十二、备注"], style: col_header, height: 20
+    row_index = sheet.rows.index(row) + 1
+    sheet.merge_cells("A#{row_index}:I#{row_index}")
+    sheet.add_row [1, nil, "本报价不含税金(税金为12%)"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 1}:I#{row_index+ 1}")
+    sheet.add_row [2, nil, "结算以最后实际尺寸数为准"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 2}:I#{row_index+ 2}")
+    sheet.add_row [3, nil, "电路布装按位计算方式如下："], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 3}:I#{row_index+ 3}")
+    sheet.add_row [4, nil, "    ①插座按单位面板数量计位"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 4}:I#{row_index+ 4}")
+    sheet.add_row [5, nil, "    ②筒灯、射灯、光管、吸顶灯、壁灯按发光体计位。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 5}:I#{row_index+ 5}")
+    sheet.add_row [6, nil, "    ③暗灯槽一制控制，首两支计二位，后面每支灯计半位。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 6}:I#{row_index+ 6}")
+    sheet.add_row [7, nil, "    ④大吊灯计三位，双路供电加一位，超出十个发光体的以后每三个发光体加一位。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 7}:I#{row_index+ 7}")
+    sheet.add_row [8, nil, "    ⑤双联开关加一位计算，三联开关加三位计算。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 8}:I#{row_index+ 8}")
+    sheet.add_row [9, nil, "    ⑥电脑网络插、电话插、电视插按一位计算，空调专线插按二位计算。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 9}:I#{row_index+ 9}")
+    sheet.add_row [10, nil, "    ⑦音响线按出线数量计位。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 10}:I#{row_index+ 10}")
+    sheet.add_row [11, nil, "    ⑧空调排水管按出线数量计位。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 11}:I#{row_index+ 11}")
+    sheet.add_row [12, nil, "业主提供的材料由业主负责送到施工现场。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 12}:I#{row_index+ 12}")
+    sheet.add_row [13, nil, "如果在施工期间变更材料，或在施工期间才选定的材料超出报价的价格，则业主需补回差价。"], style: [label, nil, nil], height: 20
+    sheet.merge_cells("C#{row_index + 13}:I#{row_index+ 13}")
+
+    last_row = sheet.add_row [nil, "制单人：#{@quotation_list.maker}              审核人：系统管理人员             业主签名："], height: 40, style: footer
+    last_row_index = sheet.rows.index(last_row) + 1
+    sheet.merge_cells("B#{last_row_index}:I#{last_row_index}")
+
+    sheet.column_widths *col_widths
+  end
+
+  # 工程款支付表
+  ysfy_header = style.add_style sz: 18, b: true, shadow: true, alignment: { horizontal: :center, vertical: :center }
+  ysfy_money  = style.add_style num_fmt: 2, alignment: { horizontal: :right, vertical: :center },
+    border: { style: :thin, color: "606060" }
+  wb.add_worksheet(name: "工程款支付表") do |sheet|
+    sheet.add_row ["预算报价费用合同数目应用表", nil, nil, nil], style: ysfy_header, height: 30
+    sheet.merge_cells("A1:D1")
+    sheet.add_row [nil, nil, nil, nil], style: common_boder, height: 17
+    sheet.add_row [nil, "施工合同总费用", nil, sum_quotation_list], style: common_boder, height: 17
+    sheet.add_row [nil, "人工费辅材", nil, ql_total_amount], style: common_boder, height: 17
+    sheet.add_row [nil, "管理费", nil, ql_total_amount*0.08], style: common_boder, height: 17
+    sheet.add_row [nil, "远程费", nil, if_province], style: common_boder, height: 17
+    sheet.add_row [nil, "税金", nil, 0], style: common_boder, height: 17
+    sheet.add_row [nil, nil, nil, nil], style: common_boder, height: 17
+    sheet.add_row [nil, "管理费、税金合计", nil, ql_total_amount*0.08], style: common_boder, height: 17
+    sheet.add_row [nil, "第一笔人工费35%", "合同签订", ql_total_amount*0.35], style: common_boder, height: 17
+    sheet.add_row [nil, "第二笔人工费30%", "水电隐蔽工程验收", ql_total_amount*0.3], style: common_boder, height: 17
+    sheet.add_row [nil, "第三笔人工费30%", "木作工程完工或油漆工进场", ql_total_amount*0.3], style: common_boder, height: 17
+    sheet.add_row [nil, "剩余人工费5%", "竣工验收（一星期内）", ql_total_amount*0.05], style: common_boder, height: 17
+    sheet.add_row [nil, nil, nil, nil], style: common_boder, height: 17
+    sheet.add_row [nil, "第一笔支付款", "第一笔人工费+管理费", ql_total_amount*0.08+ql_total_amount*0.35], style: common_boder, height: 17
+    sheet.add_row ["地址", @quotation_list.address, nil, nil]
+    sheet.add_row ["合同号", "ASJ-#{@quotation_list.created_at.strftime("%y-%m%d")}", nil, nil]
+    sheet.add_row ["客户姓名", @quotation_list.owner, nil, nil]
+    sheet.add_row ["施工面积", @quotation_list.area, nil, nil]
+
+    sheet.column_widths 8, 32, 24, 30
   end
 end

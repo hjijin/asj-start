@@ -33,13 +33,17 @@ Rails.application.routes.draw do
     get :update_line_item
     member do
       get :construction_file
+      # get :construction_contents
     end
+
     resources :quotation_list_items, only: [:show, :create, :update, :destroy] do
       member do
         get :add_line_item
         get :remove_line_item
       end
     end
+
+    resources :construction_contents, only: [:index, :create, :destroy]
   end
 
   resources :roles

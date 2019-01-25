@@ -13,7 +13,7 @@
           <tr>
             <th>序号</th>
             <th>项目名称</th>
-            <th>业主</th>
+            <th>客户姓名</th>
             <th>工程地址</th>
             <th>制单人</th>
             <th>操作</th>
@@ -27,14 +27,13 @@
             <td><%= quotation_list.address %></td>
             <td><%= quotation_list.maker %></td>
             <td>
-              <%= link_to quotation_list_path(quotation_list, format: :xlsx), title: "下载设计文件" do %>
-                <i class="icon ion-wand"></i>Excel
-              <% end %> |
-              <%= link_to construction_file_quotation_list_path(quotation_list, format: :xlsx), title: "下载工程文件" do %>
-                <i class="icon icon ion-settings"></i>Excel
-              <% end %> |
-              <%= link_to '查看', quotation_list %> |
-              <%= link_to '编辑', edit_quotation_list_path(quotation_list) %> |
+              <%= link_to "下载", quotation_list_path(quotation_list, format: :xlsx), title: "下载设计文件"%> |
+              <%#= link_to construction_file_quotation_list_path(quotation_list, format: :xlsx), title: "下载工程文件" do %>
+                <!-- <i class="icon icon ion-settings"></i>Excel -->
+              <%# end %>
+              <%= link_to '项目信息', edit_quotation_list_path(quotation_list) %> |
+              <%= link_to '施工内容', quotation_list_construction_contents_path(quotation_list.id) %> |
+              <%= link_to '报价清单', quotation_list %> |
               <%= link_to '删除', quotation_list, method: :delete, data: { confirm: 'Are you sure?' } %>
             </td>
           </tr>

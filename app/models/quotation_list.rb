@@ -7,6 +7,7 @@ class QuotationList < ApplicationRecord
   belongs_to :editor, class_name: "Staff"
   has_many :quotation_list_items, dependent: :destroy
   has_many :quotation_list_line_items, through: :quotation_list_items
+  has_many :construction_contents
 
   validates :status, inclusion: { in: %w(draft), message: "%{status} 不是一个合法的状态" }
 

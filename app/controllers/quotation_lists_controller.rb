@@ -1,5 +1,7 @@
 class QuotationListsController < ApplicationController
-  before_action :set_quotation_list, only: [:show, :edit, :update, :destroy, :add_list_item, :remove_list_item, :construction_file]
+  before_action :set_quotation_list, only: [
+    :show, :edit, :update, :destroy, :add_list_item, :remove_list_item, :construction_file, :construction_contents
+  ]
 
   # GET /quotation_lists
   # GET /quotation_lists.json
@@ -53,6 +55,7 @@ class QuotationListsController < ApplicationController
   # PATCH/PUT /quotation_lists/1.json
   def update
     authorize(@quotation_list, :can_update?)
+    quotation_list_params["in_province"] = "off" if quotation_list_params["in_province"].nil?
 
     respond_to do |format|
       if @quotation_list.update(quotation_list_params)
